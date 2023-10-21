@@ -17,7 +17,7 @@ class NewsViewModel @Inject constructor(private val useCase: GetNewsUseCase) : V
     private val _news = MutableLiveData<Resource<APIResponse>>()
     val news: LiveData<Resource<APIResponse>> get() = _news
 
-    fun getNews(country: String, tag: String) {
+    fun getNews(country: String = "tr", tag: String = "general") {
         _news.postValue(Resource.Loading())
         viewModelScope.launch {
             val result = useCase.execute(country, tag)
