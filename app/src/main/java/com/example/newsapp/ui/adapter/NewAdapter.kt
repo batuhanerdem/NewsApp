@@ -12,11 +12,9 @@ import com.example.newsapp.domain.model.New
 
 class NewAdapter(
     private val newList: List<New>,
+    val callBack: (new: New) -> Unit
 ) : RecyclerView.Adapter<NewAdapter.VHMainList>() {
     class VHMainList(val binding: RecyclerListItemBinding) : RecyclerView.ViewHolder(binding.root)
-
-    private val _selectedNew = MutableLiveData<New>()
-    val selectedNew: LiveData<New> get() = _selectedNew
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): VHMainList {
         val binding = RecyclerListItemBinding.inflate(
@@ -39,7 +37,7 @@ class NewAdapter(
         }
 
         holder.binding.ivNew.setOnClickListener {
-            _selectedNew.value = currentNew
+            callBack(currentNew)
         }
     }
 

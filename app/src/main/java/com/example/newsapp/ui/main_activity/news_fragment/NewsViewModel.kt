@@ -24,5 +24,4 @@ class NewsViewModel @Inject constructor(private val useCase: GetNewsUseCase) : V
             _news.postValue(result)
         }
     }
-
 }

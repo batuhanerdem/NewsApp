@@ -6,6 +6,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.core.os.bundleOf
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import androidx.navigation.findNavController
@@ -25,7 +26,6 @@ class NewsFragment : Fragment() {
 
     private lateinit var binding: FragmentNewsBinding // degistir
     private val fragmentViewModel: NewsViewModel by viewModels()
-    private lateinit var activityViewModel: MainActivityViewModel
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
     ): View {
@@ -35,7 +35,6 @@ class NewsFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        activityViewModel = (activity as MainActivity).activityViewModel
 
         val observer = Observer<Resource<APIResponse>> {
             when (it) {
@@ -77,10 +76,10 @@ class NewsFragment : Fragment() {
     }
 
     private fun setRV(newList: List<New>) {
-        val adapter = NewAdapter(newList)
-        adapter.selectedNew.observe(viewLifecycleOwner) {
-            activityViewModel.setSelectedNew(it)
-            view?.findNavController()?.navigate(R.id.action_homeFragment_to_newFragment)
+        val adapter = NewAdapter(newList) { new: New ->
+            val action = NewsFragmentDirections.actionHomeFragmentToNewFragment()
+            action.arguments.putSerializable("new", new)
+            view?.findNavController()?.navigate(action)
         }
         binding.recyclerViewNew.adapter = adapter
         binding.recyclerViewNew.layoutManager = LinearLayoutManager(context)
