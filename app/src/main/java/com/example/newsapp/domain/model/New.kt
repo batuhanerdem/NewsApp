@@ -8,5 +8,6 @@ data class New(
     val url: String,
     val description: String,
     val image: String,
-    val source: String
+    val source: String,
+    val date: String
 ) : Serializable

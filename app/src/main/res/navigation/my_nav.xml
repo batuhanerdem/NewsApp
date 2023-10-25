@@ -4,19 +4,54 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/my_nav"
     app:startDestination="@id/homeFragment">
-
     <fragment
         android:id="@+id/homeFragment"
-        android:name="com.example.newsapp.ui.main_activity.news_fragment.NewsFragment"
+        android:name="com.example.newsapp.ui.main_activity.home_fragment.HomeFragment"
         android:label="fragment_home"
-        tools:layout="@layout/fragment_news" >
+        tools:layout="@layout/fragment_home" >
         <action
-            android:id="@+id/action_homeFragment_to_newFragment"
+            android:id="@+id/action_homeFragment_to_settingsFragment"
+            app:destination="@id/settingsFragment" />
+        <action
+            android:id="@+id/action_homeFragment_to_holderFragment"
+            app:destination="@id/holderFragment" />
+        <action
+            android:id="@+id/action_homeFragment_to_holderFragment2"
+            app:destination="@id/holderFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/settingsFragment"
+        android:name="com.example.newsapp.ui.main_activity.settings_fragment.SettingsFragment"
+        android:label="fragment_settings"
+        tools:layout="@layout/fragment_settings" />
+    <fragment
+        android:id="@+id/holderFragment"
+        android:name="com.example.newsapp.ui.main_activity.holder_fragment.HolderFragment"
+        android:label="fragment_holder"
+        tools:layout="@layout/fragment_holder" >
+        <action
+            android:id="@+id/action_holderFragment_to_newFragment"
             app:destination="@id/newFragment" />
+        <action
+            android:id="@+id/action_holderFragment_to_newsFragment"
+            app:destination="@id/newsFragment" />
     </fragment>
     <fragment
         android:id="@+id/newFragment"
         android:name="com.example.newsapp.ui.main_activity.new_fragment.NewFragment"
         android:label="fragment_new"
-        tools:layout="@layout/fragment_new" />
+        tools:layout="@layout/fragment_new" >
+        <action
+            android:id="@+id/action_newFragment_to_holderFragment"
+            app:destination="@id/holderFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/newsFragment"
+        android:name="com.example.newsapp.ui.main_activity.news_fragment.NewsFragment"
+        android:label="fragment_news"
+        tools:layout="@layout/fragment_news" >
+        <action
+            android:id="@+id/action_newsFragment_to_newFragment"
+            app:destination="@id/newFragment" />
+    </fragment>
 </navigation>

@@ -10,21 +10,29 @@ import androidx.core.os.bundleOf
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import androidx.navigation.findNavController
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.newsapp.R
 import com.example.newsapp.databinding.FragmentNewsBinding
 import com.example.newsapp.domain.model.APIResponse
 import com.example.newsapp.domain.model.New
+import com.example.newsapp.domain.model.enums.Countries
+import com.example.newsapp.domain.model.enums.Tags
 import com.example.newsapp.ui.adapter.NewAdapter
 import com.example.newsapp.ui.main_activity.MainActivity
 import com.example.newsapp.ui.main_activity.MainActivityViewModel
+import com.example.newsapp.ui.main_activity.holder_fragment.HolderFragment
+import com.example.newsapp.ui.main_activity.holder_fragment.HolderFragmentDirections
 import com.example.newsapp.utils.Resource
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class NewsFragment : Fragment() {
+class NewsFragment(
+    private val tag: Tags = Tags.GENERAL,
+    private val country: Countries = Countries.TURKEY
+) : Fragment() {
 
-    private lateinit var binding: FragmentNewsBinding // degistir
+    private lateinit var binding: FragmentNewsBinding
     private val fragmentViewModel: NewsViewModel by viewModels()
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
@@ -36,33 +44,22 @@ class NewsFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        val observer = Observer<Resource<APIResponse>> {
-            when (it) {
-                is Resource.Loading -> {
-                    setProgressBar()
-                }
-
-                is Resource.Success -> {
-                    val data = it.data?.result
-                    data?.let { list ->
-                        setRV(list)
-                    }
-                    hideProgressBar()
-                }
-
-                is Resource.Error -> {
-                    hideProgressBar()
-                    Toast.makeText(
-                        requireContext(),
-                        "Something went wrong, please try again later",
-                        Toast.LENGTH_SHORT
-                    ).show()
-                }
-            }
+        fragmentViewModel.news.observe(viewLifecycleOwner) {
+            setRV(it)
         }
 
-        fragmentViewModel.getNews()
-        fragmentViewModel.news.observe(viewLifecycleOwner, observer)
+        fragmentViewModel.error.observe(viewLifecycleOwner) {
+            Toast.makeText(
+                requireContext(),
+                it ?: "Something went wrong, please try again later",
+                Toast.LENGTH_LONG
+            ).show()
+        }
+
+        fragmentViewModel.isLoading.observe(viewLifecycleOwner) {
+            if (it) setProgressBar() else hideProgressBar()
+        }
+        fragmentViewModel.getNews(country, tag)
     }
 
     private fun hideProgressBar() {
@@ -77,9 +74,10 @@ class NewsFragment : Fragment() {
 
     private fun setRV(newList: List<New>) {
         val adapter = NewAdapter(newList) { new: New ->
-            val action = NewsFragmentDirections.actionHomeFragmentToNewFragment()
+            val action = HolderFragmentDirections.actionHolderFragmentToNewFragment()
+            val navController = requireParentFragment().findNavController()
             action.arguments.putSerializable("new", new)
-            view?.findNavController()?.navigate(action)
+            navController.navigate(action)
         }
         binding.recyclerViewNew.adapter = adapter
         binding.recyclerViewNew.layoutManager = LinearLayoutManager(context)
