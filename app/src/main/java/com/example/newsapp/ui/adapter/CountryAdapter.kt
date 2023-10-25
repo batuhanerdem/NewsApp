@@ -4,7 +4,6 @@ import android.annotation.SuppressLint
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.core.graphics.drawable.toDrawable
 import androidx.recyclerview.widget.RecyclerView
 import com.example.newsapp.R
 import com.example.newsapp.databinding.RecyclerCountryItemBinding
@@ -25,6 +24,7 @@ class CountryAdapter : RecyclerView.Adapter<CountryAdapter.VHMainList>() {
         return VHMainList(binding)
     }
 
+    @SuppressLint("UseCompatLoadingForDrawables", "NotifyDataSetChanged")
     override fun onBindViewHolder(holder: VHMainList, position: Int) {
         val selected = holder.binding.btnCountry.context.resources.getDrawable(
             R.drawable.selected_button,
