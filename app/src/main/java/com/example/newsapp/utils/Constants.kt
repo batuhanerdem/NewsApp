@@ -1,8 +1,15 @@
 package com.example.newsapp.utils
 
+import com.example.newsapp.domain.model.enums.Countries
 import com.example.newsapp.domain.model.enums.Tags
 
 object Constants {
-    val BASE_URL = "https://api.collectapi.com"
-    var TAG_LIST: List<Tags> = enumValues<Tags>().toList()
+    const val BASE_URL = "https://api.collectapi.com"
+    fun getTags(): List<Tags> {
+        return enumValues<Tags>().toList()
+    }
+
+    fun getCountries(): List<Countries> {
+        return enumValues<Countries>().toList()
+    }
 }

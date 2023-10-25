@@ -32,9 +32,6 @@
         <action
             android:id="@+id/action_holderFragment_to_newFragment"
             app:destination="@id/newFragment" />
-        <action
-            android:id="@+id/action_holderFragment_to_newsFragment"
-            app:destination="@id/newsFragment" />
     </fragment>
     <fragment
         android:id="@+id/newFragment"

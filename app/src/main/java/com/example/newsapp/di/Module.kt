@@ -19,11 +19,10 @@ class Module {
     @Provides
     @Singleton
     fun provideRetrofitInstance(): Retrofit {
-        val retrofitInstance = Retrofit.Builder()
+        return Retrofit.Builder()
             .addConverterFactory(GsonConverterFactory.create())
             .baseUrl(Constants.BASE_URL)
             .build()
-        return retrofitInstance
     }
 
     @Provides
