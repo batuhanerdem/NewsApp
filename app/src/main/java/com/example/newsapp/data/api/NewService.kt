@@ -13,6 +13,7 @@ interface NewService {
     @GET("news/getNews")
     suspend fun getNews(
         @Query("country") country: String,
-        @Query("tag") tag: String
+        @Query("tag") tag: String,
+//        @Query("paging") paging: Int = 0
     ): Response<APIResponse>
 }
