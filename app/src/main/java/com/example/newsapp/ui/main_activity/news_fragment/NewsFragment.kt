@@ -64,14 +64,13 @@ class NewsFragment(
     }
 
     private fun setRV(newList: List<New>) {
+        val recyclerView = binding.recyclerViewNew
         val adapter = NewAdapter(newList) { new: New ->
-            val action = HolderFragmentDirections.actionHolderFragmentToNewFragment()
+            val action = HolderFragmentDirections.actionHolderFragmentToNewFragment(new)
             val navController = requireParentFragment().findNavController()
-            action.arguments.putSerializable("new", new)
             navController.navigate(action)
-
         }
-        binding.recyclerViewNew.adapter = adapter
-        binding.recyclerViewNew.layoutManager = LinearLayoutManager(context)
+        recyclerView.adapter = adapter
+        recyclerView.layoutManager = LinearLayoutManager(context)
     }
 }

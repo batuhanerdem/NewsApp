@@ -8,6 +8,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.core.net.toUri
 import androidx.fragment.app.Fragment
+import androidx.navigation.fragment.navArgs
 import com.bumptech.glide.Glide
 import com.example.newsapp.databinding.FragmentNewBinding
 import com.example.newsapp.domain.model.New
@@ -18,7 +19,7 @@ import java.util.TimeZone
 
 class NewFragment : Fragment() {
     private lateinit var binding: FragmentNewBinding
-
+    private val args: NewFragmentArgs by navArgs()
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -29,7 +30,7 @@ class NewFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        val selectedNew = arguments?.getSerializable("new")!! as New
+        val selectedNew = args.New
         setUI(selectedNew)
     }
 
@@ -39,7 +40,8 @@ class NewFragment : Fragment() {
             Glide.with(requireActivity()).load(imageUri).into(ivNew)
             tvTitle.text = new.name
             tvNewText.text = new.description
-            tvSource.text = new.date.formatDate()
+            tvSource.text = new.source
+            tvDate.text = new.date.formatDate()
             tvUrl.setOnClickListener {
                 val uri = Uri.parse(new.url)
                 val intent = Intent(Intent.ACTION_VIEW, uri)

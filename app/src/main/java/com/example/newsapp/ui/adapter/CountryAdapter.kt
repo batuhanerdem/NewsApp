@@ -1,9 +1,9 @@
 package com.example.newsapp.ui.adapter
 
-import android.annotation.SuppressLint
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.content.res.ResourcesCompat
 import androidx.recyclerview.widget.RecyclerView
 import com.example.newsapp.R
 import com.example.newsapp.databinding.RecyclerCountryItemBinding
@@ -24,13 +24,15 @@ class CountryAdapter : RecyclerView.Adapter<CountryAdapter.VHMainList>() {
         return VHMainList(binding)
     }
 
-    @SuppressLint("UseCompatLoadingForDrawables", "NotifyDataSetChanged")
     override fun onBindViewHolder(holder: VHMainList, position: Int) {
-        val selected = holder.binding.btnCountry.context.resources.getDrawable(
+        val resources = holder.binding.btnCountry.context.resources
+        val selected = ResourcesCompat.getDrawable(
+            resources,
             R.drawable.selected_button,
             null
         )
-        val unSelected = holder.binding.btnCountry.context.resources.getDrawable(
+        val unSelected = ResourcesCompat.getDrawable(
+            resources,
             R.drawable.unselected_button,
             null
         )
@@ -48,7 +50,6 @@ class CountryAdapter : RecyclerView.Adapter<CountryAdapter.VHMainList>() {
         } else {
             holder.binding.btnCountry.foreground = unSelected
             holder.binding.tvSelected.visibility = View.INVISIBLE
-
         }
     }
 
