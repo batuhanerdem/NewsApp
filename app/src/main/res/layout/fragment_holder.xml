@@ -4,12 +4,12 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-
     tools:context=".ui.main_activity.holder_fragment.HolderFragment">
 
     <com.google.android.material.tabs.TabLayout
         android:id="@+id/tabLayout"
         android:layout_width="match_parent"
+        android:background="@android:color/transparent"
         android:layout_height="wrap_content"
         app:layout_constraintTop_toTopOf="parent" />
 
