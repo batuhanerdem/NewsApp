@@ -6,8 +6,8 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import com.example.newsapp.databinding.FragmentHolderBinding
+import com.example.newsapp.domain.model.enums.Tags
 import com.example.newsapp.ui.adapter.FragmentAdapter
-import com.example.newsapp.utils.Constants
 import com.google.android.material.tabs.TabLayoutMediator
 
 class HolderFragment : Fragment() {
@@ -30,7 +30,7 @@ class HolderFragment : Fragment() {
         val adapter = FragmentAdapter(this.childFragmentManager, this.lifecycle)
         val viewPager = binding.viewPager
         val tabLayout = binding.tabLayout
-        val tags = Constants.getTags()
+        val tags = enumValues<Tags>().toList()
         viewPager.adapter = adapter
         TabLayoutMediator(tabLayout, viewPager) { tab, position ->
             tab.text = tags[position].title
