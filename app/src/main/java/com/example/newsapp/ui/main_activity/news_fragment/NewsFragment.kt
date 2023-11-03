@@ -19,11 +19,10 @@ import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
 class NewsFragment(
-    private val tag: Tags = Tags.GENERAL,
-    private val country: Countries = Countries.TURKEY
+    private val tag: Tags = Tags.GENERAL, private val country: Countries = Countries.TURKEY
 ) : Fragment() {
-
     private lateinit var binding: FragmentNewsBinding
+    private lateinit var adapter: NewAdapter
     private val fragmentViewModel: NewsViewModel by viewModels()
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
@@ -34,9 +33,21 @@ class NewsFragment(
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        setRV()
+        setObServers()
+        fragmentViewModel.getNews(country, tag)
+    }
 
+    private fun setRV() {
+        adapter = NewAdapter { new -> goToNewFragmentWithNew(new) }
+        val recyclerView = binding.recyclerViewNew
+        recyclerView.adapter = adapter
+        recyclerView.layoutManager = LinearLayoutManager(context)
+    }
+
+    private fun setObServers() {
         fragmentViewModel.news.observe(viewLifecycleOwner) {
-            setRV(it)
+            adapter.submitList(it)
         }
 
         fragmentViewModel.error.observe(viewLifecycleOwner) {
@@ -50,7 +61,12 @@ class NewsFragment(
         fragmentViewModel.isLoading.observe(viewLifecycleOwner) {
             if (it) setProgressBar() else hideProgressBar()
         }
-        fragmentViewModel.getNews(country, tag)
+    }
+
+    private fun goToNewFragmentWithNew(new: New) {
+        val action = HolderFragmentDirections.actionHolderFragmentToNewFragment(new)
+        val navController = requireParentFragment().findNavController()
+        navController.navigate(action)
     }
 
     private fun hideProgressBar() {
@@ -63,14 +79,4 @@ class NewsFragment(
         binding.recyclerViewNew.visibility = View.GONE
     }
 
-    private fun setRV(newList: List<New>) {
-        val recyclerView = binding.recyclerViewNew
-        val adapter = NewAdapter(newList) { new: New ->
-            val action = HolderFragmentDirections.actionHolderFragmentToNewFragment(new)
-            val navController = requireParentFragment().findNavController()
-            navController.navigate(action)
-        }
-        recyclerView.adapter = adapter
-        recyclerView.layoutManager = LinearLayoutManager(context)
-    }
 }
