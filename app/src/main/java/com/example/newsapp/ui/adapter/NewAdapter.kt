@@ -9,7 +9,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example.newsapp.databinding.RecyclerListItemBinding
 import com.example.newsapp.domain.model.New
-import com.example.newsapp.ui.main_activity.formatDate
+import com.example.newsapp.utils.DateUtils.formatDate
 
 class NewAdapter(
     private val callBack: (new: New) -> Unit

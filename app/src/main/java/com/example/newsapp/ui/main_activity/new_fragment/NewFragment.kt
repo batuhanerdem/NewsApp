@@ -12,8 +12,7 @@ import androidx.navigation.fragment.navArgs
 import com.bumptech.glide.Glide
 import com.example.newsapp.databinding.FragmentNewBinding
 import com.example.newsapp.domain.model.New
-import com.example.newsapp.ui.main_activity.formatDate
-
+import com.example.newsapp.utils.DateUtils.formatDate
 class NewFragment : Fragment() {
     private lateinit var binding: FragmentNewBinding
     private val args: NewFragmentArgs by navArgs()

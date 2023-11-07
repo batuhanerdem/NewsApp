@@ -11,7 +11,6 @@ import javax.inject.Inject
 @ViewModelScoped
 class GetNewsUseCase @Inject constructor(private val newRepository: NewRepository) {
 
-
     suspend fun execute(country: String, tag: String): Flow<Resource<APIResponse>> = flow {
         emit(Resource.Loading())
         val result = newRepository.getNews(country, tag)
