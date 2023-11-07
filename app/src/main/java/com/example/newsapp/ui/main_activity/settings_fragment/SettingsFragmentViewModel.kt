@@ -4,7 +4,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.example.newsapp.domain.model.SelectableData
 import com.example.newsapp.domain.model.enums.Countries
-import com.example.newsapp.utils.Constants
+import com.example.newsapp.utils.Country
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 
@@ -21,7 +21,7 @@ class SettingsFragmentViewModel @Inject constructor() : ViewModel() {
     }
 
     private fun Countries.toSelectableData(): SelectableData<Countries> {
-        val isSelected = Constants.selectedCountry == this
+        val isSelected = Country.selectedCountry == this
         return SelectableData(this, isSelected)
     }
 }

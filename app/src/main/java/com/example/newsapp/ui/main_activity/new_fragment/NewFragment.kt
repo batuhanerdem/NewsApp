@@ -12,10 +12,7 @@ import androidx.navigation.fragment.navArgs
 import com.bumptech.glide.Glide
 import com.example.newsapp.databinding.FragmentNewBinding
 import com.example.newsapp.domain.model.New
-import com.example.newsapp.utils.Constants.Companion.formatDate
-import java.text.SimpleDateFormat
-import java.util.Locale
-import java.util.TimeZone
+import com.example.newsapp.ui.main_activity.formatDate
 
 class NewFragment : Fragment() {
     private lateinit var binding: FragmentNewBinding

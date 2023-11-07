@@ -33,9 +33,9 @@ class NewsFragment(
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        fragmentViewModel.getNews(country, tag)
         setRV()
         setObServers()
-        fragmentViewModel.getNews(country, tag)
     }
 
     private fun setRV() {

@@ -9,10 +9,12 @@
 
 
     <ImageView
+        android:contentDescription="@string/content_describtion"
         android:id="@+id/ivNew"
         android:layout_width="match_parent"
         android:layout_height="300dp"
-        android:layout_marginHorizontal="10dp"
+        android:scaleType="centerCrop"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         tools:src="@drawable/turkey" />
@@ -34,16 +36,15 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:ellipsize="end"
-                android:fontFamily="@font/oregano"
+                android:fontFamily="sans-serif-condensed"
                 android:paddingHorizontal="10dp"
-                android:paddingTop="10dp"
                 android:textAlignment="center"
                 android:textColor="@color/black"
-                android:textSize="33sp"
+                android:textSize="25sp"
                 android:textStyle="bold"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
-                tools:text="Uzun Metin Burada, Eğer Fazla Uzunsa Sonunda Üç Nokta Olacak." />
+                tools:text="Test" />
 
             <TextView
                 android:id="@+id/tvNewText"
@@ -51,16 +52,16 @@
                 android:layout_height="0dp"
                 android:layout_marginHorizontal="10dp"
                 android:ellipsize="end"
-                android:fontFamily="@font/oregano"
+                android:fontFamily="sans-serif-medium"
                 android:paddingHorizontal="8dp"
                 android:paddingVertical="10dp"
                 android:textColor="@color/black"
-                android:textSize="30sp"
+                android:textSize="23sp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="1.0"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/tvTitle"
-                tools:text="Uzun Metin Burada, Eğer Fazla Uzunsa Sonunda Üç Nokta Olacak.Uzun Metin Burada, Eğer Fazla Uzunsa Sonunda Üç Nokta Olacak" />
+                tools:text="Test" />
         </androidx.constraintlayout.widget.ConstraintLayout>
     </ScrollView>
 
@@ -74,12 +75,11 @@
         <TextView
             android:id="@+id/tvUrl"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="15dp"
+            android:layout_height="50dp"
             android:layout_marginBottom="50dp"
             android:clickable="true"
             android:focusable="true"
-            android:fontFamily="@font/oregano"
+            android:fontFamily="sans-serif-light"
             android:text="@string/click_link"
             android:textAlignment="center"
             android:textColor="@color/black"
@@ -94,10 +94,10 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_margin="5dp"
-            android:fontFamily="@font/oregano"
+            android:fontFamily="sans-serif-light"
             android:paddingBottom="15dp"
             android:textColor="@color/black"
-            android:textSize="27sp"
+            android:textSize="22sp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             tools:text="Source" />
@@ -107,10 +107,10 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_margin="5dp"
-            android:fontFamily="@font/oregano"
+            android:fontFamily="sans-serif-light"
             android:paddingBottom="15dp"
             android:textColor="@color/black"
-            android:textSize="27sp"
+            android:textSize="22sp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             tools:text="Monday 05.12.2023" />
