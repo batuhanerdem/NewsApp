@@ -7,7 +7,7 @@ import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.example.newsapp.R
 import com.example.newsapp.databinding.RecyclerCountryItemBinding
-import com.example.newsapp.domain.model.SelectableData
+import com.example.newsapp.utils.SelectableData
 import com.example.newsapp.domain.model.enums.Countries
 
 class CountryAdapter(

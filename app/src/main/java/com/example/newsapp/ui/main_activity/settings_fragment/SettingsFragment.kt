@@ -9,7 +9,7 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.newsapp.databinding.FragmentSettingsBinding
-import com.example.newsapp.domain.model.SelectableData
+import com.example.newsapp.utils.SelectableData
 import com.example.newsapp.domain.model.enums.Countries
 import com.example.newsapp.utils.Country
 import dagger.hilt.android.AndroidEntryPoint
@@ -18,7 +18,7 @@ import dagger.hilt.android.AndroidEntryPoint
 class SettingsFragment : Fragment() {
     private lateinit var binding: FragmentSettingsBinding
     private lateinit var adapter: CountryAdapter
-    private val viewModel: SettingsFragmentViewModel by viewModels()
+    private val viewModel: SettingsViewModel by viewModels()
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
     ): View {
@@ -46,16 +46,19 @@ class SettingsFragment : Fragment() {
         Country.selectedCountry = selectedCountry.data
         val list = viewModel.selectableCountryList.value
         list?.let {
+            // find new selected country and make it selected
+            val nextSelectedDataIndex = it.indexOf(selectedCountry)
+            if (nextSelectedDataIndex == -1) return
+            it[nextSelectedDataIndex] = SelectableData(selectedCountry.data, true)
+
+            //find previous selected country and make it unselected
             val previousSelectedDataIndex = it.indexOfFirst { country ->
                 country.isSelected
             }
-            val nextSelectedDataIndex = it.indexOf(selectedCountry)
-            if (nextSelectedDataIndex == -1) return
             val previousData = it[previousSelectedDataIndex].data
             it[previousSelectedDataIndex] = SelectableData(
                 previousData, false
             )
-            it[nextSelectedDataIndex] = SelectableData(selectedCountry.data, true)
             viewModel.selectableCountryList.value = it
         }
     }
