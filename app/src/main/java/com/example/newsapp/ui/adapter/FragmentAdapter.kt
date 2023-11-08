@@ -15,11 +15,11 @@ class FragmentAdapter(
     FragmentStateAdapter(fragmentManager, lifecycle) {
 
     private val tags = enumValues<Tags>().toList()
-    override fun getItemCount(): Int {
-        return tags.size
-    }
 
     override fun createFragment(position: Int): Fragment {
         return NewsFragment(tags[position], Country.selectedCountry)
+    }
+    override fun getItemCount(): Int {
+        return tags.size
     }
 }
