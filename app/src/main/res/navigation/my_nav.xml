@@ -3,27 +3,16 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/my_nav"
-    app:startDestination="@id/homeFragment">
-    <fragment
-        android:id="@+id/homeFragment"
-        android:name="com.example.newsapp.ui.main_activity.home_fragment.HomeFragment"
-        android:label="fragment_home"
-        tools:layout="@layout/fragment_home" >
-        <action
-            android:id="@+id/action_homeFragment_to_settingsFragment"
-            app:destination="@id/settingsFragment" />
-        <action
-            android:id="@+id/action_homeFragment_to_holderFragment"
-            app:destination="@id/holderFragment" />
-        <action
-            android:id="@+id/action_homeFragment_to_holderFragment2"
-            app:destination="@id/holderFragment" />
-    </fragment>
+    app:startDestination="@id/holderFragment">
     <fragment
         android:id="@+id/settingsFragment"
         android:name="com.example.newsapp.ui.main_activity.settings_fragment.SettingsFragment"
         android:label="fragment_settings"
-        tools:layout="@layout/fragment_settings" />
+        tools:layout="@layout/fragment_settings" >
+        <action
+            android:id="@+id/action_settingsFragment_to_holderFragment"
+            app:destination="@id/holderFragment" />
+    </fragment>
     <fragment
         android:id="@+id/holderFragment"
         android:name="com.example.newsapp.ui.main_activity.holder_fragment.HolderFragment"
@@ -32,6 +21,12 @@
         <action
             android:id="@+id/action_holderFragment_to_newFragment"
             app:destination="@id/newFragment" />
+        <action
+            android:id="@+id/action_holderFragment_to_settingsFragment"
+            app:destination="@id/settingsFragment" />
+        <action
+            android:id="@+id/action_holderFragment_to_newsFragment"
+            app:destination="@id/newsFragment" />
     </fragment>
     <fragment
         android:id="@+id/newFragment"

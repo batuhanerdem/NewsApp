@@ -7,8 +7,8 @@ import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.example.newsapp.R
 import com.example.newsapp.databinding.RecyclerCountryItemBinding
-import com.example.newsapp.utils.SelectableData
 import com.example.newsapp.domain.model.enums.Countries
+import com.example.newsapp.utils.SelectableData
 
 class CountryAdapter(
     private val callback: (SelectableData<Countries>) -> Unit
@@ -26,24 +26,27 @@ class CountryAdapter(
 
     override fun onBindViewHolder(holder: VHMainList, position: Int) {
         val currentSelectableCountry = getItem(position)
-        val resources = holder.binding.btnCountry.resources
-        val selectedDrawable = ResourcesCompat.getDrawable(
-            resources, R.drawable.selected_button, null
-        )
-        val unselectedDrawable = ResourcesCompat.getDrawable(
-            resources, R.drawable.unselected_button, null
-        )
-        holder.binding.btnCountry.setImageResource(currentSelectableCountry.data.flagImageId)
-        holder.binding.btnCountry.setOnClickListener {
-            callback(currentSelectableCountry)
-        }
 
-        if (currentSelectableCountry.isSelected) {
-            holder.binding.btnCountry.foreground = selectedDrawable
-            holder.binding.tvSelected.visibility = View.VISIBLE
-        } else {
-            holder.binding.btnCountry.foreground = unselectedDrawable
-            holder.binding.tvSelected.visibility = View.INVISIBLE
+        val resources = holder.binding.btnCountry.resources
+        val selectedDrawable = ResourcesCompat
+            .getDrawable(resources, R.drawable.selected_button, null)
+        val unselectedDrawable = ResourcesCompat
+            .getDrawable(resources, R.drawable.unselected_button, null)
+
+        holder.binding.apply {
+            btnCountry.setImageResource(currentSelectableCountry.data.flagImageId)
+
+            btnCountry.setOnClickListener {
+                callback(currentSelectableCountry)
+            }
+
+            if (currentSelectableCountry.isSelected) {
+                btnCountry.foreground = selectedDrawable
+                tvSelected.visibility = View.VISIBLE
+            } else {
+                btnCountry.foreground = unselectedDrawable
+                tvSelected.visibility = View.INVISIBLE
+            }
         }
     }
 }

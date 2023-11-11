@@ -9,9 +9,10 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.newsapp.databinding.FragmentSettingsBinding
-import com.example.newsapp.utils.SelectableData
 import com.example.newsapp.domain.model.enums.Countries
+import com.example.newsapp.ui.main_activity.MainActivity
 import com.example.newsapp.utils.Country
+import com.example.newsapp.utils.SelectableData
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -19,6 +20,13 @@ class SettingsFragment : Fragment() {
     private lateinit var binding: FragmentSettingsBinding
     private lateinit var adapter: CountryAdapter
     private val viewModel: SettingsViewModel by viewModels()
+
+    override fun onResume() {
+        super.onResume()
+        val hostingActivity = requireActivity() as MainActivity
+        hostingActivity.setSelectedFragment(this)
+    }
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
     ): View {
@@ -46,16 +54,17 @@ class SettingsFragment : Fragment() {
         Country.selectedCountry = selectedCountry.data
         val list = viewModel.selectableCountryList.value
         list?.let {
-            // find new selected country and make it selected
+            // find new selected country's index
             val nextSelectedDataIndex = it.indexOf(selectedCountry)
             if (nextSelectedDataIndex == -1) return
-            it[nextSelectedDataIndex] = SelectableData(selectedCountry.data, true)
 
-            //find previous selected country and make it unselected
+            //find previous selected country's index
             val previousSelectedDataIndex = it.indexOfFirst { country ->
                 country.isSelected
             }
             val previousData = it[previousSelectedDataIndex].data
+
+            it[nextSelectedDataIndex] = SelectableData(selectedCountry.data, true)
             it[previousSelectedDataIndex] = SelectableData(
                 previousData, false
             )

@@ -8,16 +8,24 @@ import androidx.fragment.app.Fragment
 import com.example.newsapp.databinding.FragmentHolderBinding
 import com.example.newsapp.domain.model.enums.Tags
 import com.example.newsapp.ui.adapter.FragmentAdapter
+import com.example.newsapp.ui.main_activity.MainActivity
 import com.google.android.material.tabs.TabLayoutMediator
 
 class HolderFragment : Fragment() {
     private lateinit var binding: FragmentHolderBinding
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
         binding = FragmentHolderBinding.inflate(inflater)
         return binding.root
+    }
+
+    override fun onResume() {
+        super.onResume()
+        val hostingActivity = requireActivity() as MainActivity
+        hostingActivity.setSelectedFragment(this)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
