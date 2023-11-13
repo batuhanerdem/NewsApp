@@ -1,10 +1,10 @@
-<resources xmlns:tools="http://schemas.android.com/tools">
+<resources>
     <!-- Base application theme. -->
     <style name="Base.Theme.CurrencyApp" parent="Theme.Material3.DayNight.NoActionBar">
-<!--        <item name="android:windowDrawsSystemBarBackgrounds">true</item>-->
-<!--        <item name="android:statusBarColor">@android:color/transparent</item>-->
-<!--        &lt;!&ndash;        <item name="android:windowTranslucentStatus">true</item>&ndash;&gt;-->
-<!--        <item name="android:windowLightStatusBar">true</item>-->
+        <item name="android:windowDrawsSystemBarBackgrounds">true</item>
+        <item name="android:statusBarColor">@android:color/transparent</item>
+        <!--        <item name="android:windowTranslucentStatus">true</item>-->
+        <item name="android:windowLightStatusBar">true</item>
 
     </style>
 </resources>

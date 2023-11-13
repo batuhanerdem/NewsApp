@@ -11,14 +11,15 @@ import com.example.newsapp.utils.Country
 class FragmentAdapter(
     fragmentManager: FragmentManager,
     lifecycle: Lifecycle,
+    private val tags: List<Tags>
 ) :
     FragmentStateAdapter(fragmentManager, lifecycle) {
 
-    private val tags = enumValues<Tags>().toList()
 
     override fun createFragment(position: Int): Fragment {
         return NewsFragment(tags[position], Country.selectedCountry)
     }
+
     override fun getItemCount(): Int {
         return tags.size
     }

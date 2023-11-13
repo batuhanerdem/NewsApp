@@ -34,10 +34,10 @@ class HolderFragment : Fragment() {
     }
 
     private fun setUI() {
-        val adapter = FragmentAdapter(this.childFragmentManager, this.lifecycle)
         val viewPager = binding.viewPager
         val tabLayout = binding.tabLayout
         val tags = enumValues<Tags>().toList()
+        val adapter = FragmentAdapter(this.childFragmentManager, this.lifecycle,tags)
         viewPager.adapter = adapter
         TabLayoutMediator(tabLayout, viewPager) { tab, position ->
             tab.text = tags[position].title
