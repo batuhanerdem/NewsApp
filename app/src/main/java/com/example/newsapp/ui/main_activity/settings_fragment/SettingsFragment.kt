@@ -59,15 +59,11 @@ class SettingsFragment : Fragment() {
             if (nextSelectedDataIndex == -1) return
 
             //find previous selected country's index
-            val previousSelectedDataIndex = it.indexOfFirst { country ->
-                country.isSelected
-            }
-            val previousData = it[previousSelectedDataIndex].data
+            val previousSelectedDataIndex = it.indexOfFirst { it.isSelected }
 
-            it[nextSelectedDataIndex] = SelectableData(selectedCountry.data, true)
-            it[previousSelectedDataIndex] = SelectableData(
-                previousData, false
-            )
+            it[nextSelectedDataIndex] = it[nextSelectedDataIndex].getReversed()
+            it[previousSelectedDataIndex] = it[previousSelectedDataIndex].getReversed()
+
             viewModel.selectableCountryList.value = it
         }
     }

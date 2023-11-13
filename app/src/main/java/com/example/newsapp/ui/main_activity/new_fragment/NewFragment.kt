@@ -12,7 +12,7 @@ import androidx.navigation.fragment.navArgs
 import com.bumptech.glide.Glide
 import com.example.newsapp.databinding.FragmentNewBinding
 import com.example.newsapp.domain.model.New
-import com.example.newsapp.utils.DateUtils.formatDate
+import com.example.newsapp.utils.DateUtils.formatDateFull
 class NewFragment : Fragment() {
     private lateinit var binding: FragmentNewBinding
     private val args: NewFragmentArgs by navArgs()
@@ -37,7 +37,7 @@ class NewFragment : Fragment() {
             tvTitle.text = new.name
             tvNewText.text = new.description
             tvSource.text = new.source
-            tvDate.text = new.date.formatDate()
+            tvDate.text = new.date.formatDateFull()
             tvUrl.setOnClickListener {
                 val uri = Uri.parse(new.url)
                 val intent = Intent(Intent.ACTION_VIEW, uri)
