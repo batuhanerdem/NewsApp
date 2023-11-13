@@ -1,6 +1,8 @@
 package com.example.newsapp.ui.main_activity
 
+import android.os.Build
 import android.os.Bundle
+import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.NavHostFragment
@@ -9,13 +11,16 @@ import com.example.newsapp.databinding.ActivityMainBinding
 import com.example.newsapp.domain.model.enums.FragmentAndIds
 import dagger.hilt.android.AndroidEntryPoint
 
+
 @AndroidEntryPoint
 class MainActivity() : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
+        setNotificationBarTransparent()
         setNavItemListener()
     }
 
@@ -27,6 +32,15 @@ class MainActivity() : AppCompatActivity() {
         binding.navigationView.setOnItemSelectedListener {
             navController.navigate(it.itemId)
             return@setOnItemSelectedListener true
+        }
+    }
+
+    private fun setNotificationBarTransparent() {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
+            window.setDecorFitsSystemWindows(false)
+        } else {
+            window.decorView.systemUiVisibility =
+                View.SYSTEM_UI_FLAG_LAYOUT_STABLE or View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
         }
     }
 
