@@ -4,6 +4,7 @@ import android.os.Build
 import android.os.Bundle
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.view.isGone
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.NavHostFragment
 import com.example.newsapp.R
@@ -21,13 +22,17 @@ class MainActivity() : AppCompatActivity() {
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
         setNotificationBarTransparent()
-        setNavItemListener()
+        setNavListeners()
     }
 
-    private fun setNavItemListener() {
+    private fun setNavListeners() {
         val navHostFragment =
             supportFragmentManager.findFragmentById(R.id.fragmentContainerView) as NavHostFragment
         val navController = navHostFragment.navController
+
+        navController.addOnDestinationChangedListener { _, navDestination, _ ->
+            binding.navigationView.isGone = navDestination.id == R.id.newFragment
+        }
 
         binding.navigationView.setOnItemSelectedListener {
             navController.navigate(it.itemId)
