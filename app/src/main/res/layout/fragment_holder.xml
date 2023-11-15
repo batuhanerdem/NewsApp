@@ -46,7 +46,19 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="@id/tabLayout"
         app:layout_constraintStart_toStartOf="@+id/tabLayout"
-        app:layout_constraintTop_toTopOf="@id/tabLayout" />
+        app:layout_constraintTop_toTopOf="@id/tabLayout"
+         />
+
+    <ProgressBar
+        android:id="@+id/loadingBar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:visibility="invisible"
+        app:layout_constraintBottom_toBottomOf="@id/rvSearch"
+        app:layout_constraintEnd_toEndOf="@id/rvSearch"
+        app:layout_constraintStart_toStartOf="@id/rvSearch"
+        app:layout_constraintTop_toTopOf="@id/rvSearch"
+        tools:visibility="visible" />
 
     <androidx.appcompat.widget.SearchView
         android:id="@+id/searchView"

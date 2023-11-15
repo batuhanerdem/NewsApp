@@ -43,6 +43,7 @@ class HolderFragment : Fragment() {
         setLayout()
         setOnListChangeListener()
         setSearchListener()
+        setLoadingListener()
     }
 
     private fun setLayout() {
@@ -56,7 +57,7 @@ class HolderFragment : Fragment() {
             tab.text = tags[position].title
         }.attach()
 
-        //
+        //recycler view for searching results
         adapter = NewAdapter { new -> goToNewFragmentWithNew(new) }
         binding.rvSearch.adapter = adapter
         binding.rvSearch.layoutManager = LinearLayoutManager(context)
@@ -88,6 +89,13 @@ class HolderFragment : Fragment() {
     private fun setOnListChangeListener() {
         viewModel.searchingList.observe(viewLifecycleOwner) {
             adapter.submitList(it.toList())
+        }
+    }
+
+    private fun setLoadingListener() {
+        viewModel.isLoading.observe(viewLifecycleOwner) {
+            println(binding.loadingBar.isVisible)
+            binding.loadingBar.isVisible = it
         }
     }
 

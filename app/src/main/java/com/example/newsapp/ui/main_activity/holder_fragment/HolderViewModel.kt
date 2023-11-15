@@ -1,5 +1,6 @@
 package com.example.newsapp.ui.main_activity.holder_fragment
 
+import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -16,6 +17,8 @@ import javax.inject.Inject
 @HiltViewModel
 class HolderViewModel @Inject constructor(private val getAllNewsUseCase: GetAllNewsUseCase) :
     ViewModel() {
+    private var _isLoading = MutableLiveData<Boolean>()
+    val isLoading: LiveData<Boolean> get() = _isLoading
 
     val searchingList = MutableLiveData<List<New>>()
     private lateinit var newList: List<New>
@@ -27,23 +30,31 @@ class HolderViewModel @Inject constructor(private val getAllNewsUseCase: GetAllN
     }
 
     fun filterList(query: String?) {
-        if (query == null) return
-        val filteredList = mutableListOf<New>()
-        for (new in newList) {
-            if (new.name.lowercase(Locale.ROOT).contains(query)) {
-                filteredList.add(new)
+        _isLoading.value = true
+        viewModelScope.launch {
+            if (query == null) return@launch
+            val filteredList = mutableListOf<New>()
+            for (new in newList) {
+                if (new.name.lowercase(Locale.ROOT).contains(query)) {
+                    filteredList.add(new)
+                }
             }
+            searchingList.value = filteredList
+            _isLoading.value = false
         }
-        searchingList.value = filteredList
     }
+
 
     private suspend fun getAllNews() {
         val result = getAllNewsUseCase.execute()
         result.onEach {
             when (it) {
-                is Resource.Error -> TODO()
-                is Resource.Loading -> TODO()
-                is Resource.Success -> newList = it.data!!
+                is Resource.Error -> _isLoading.value = false
+                is Resource.Loading -> _isLoading.value = true
+                is Resource.Success -> {
+                    newList = it.data!!
+                    _isLoading.value = false
+                }
             }
         }.collect()
     }
