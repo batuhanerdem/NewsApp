@@ -94,7 +94,6 @@ class HolderFragment : Fragment() {
 
     private fun setLoadingListener() {
         viewModel.isLoading.observe(viewLifecycleOwner) {
-            println(binding.loadingBar.isVisible)
             binding.loadingBar.isVisible = it
         }
     }

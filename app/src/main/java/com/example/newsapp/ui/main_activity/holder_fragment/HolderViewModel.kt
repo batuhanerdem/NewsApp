@@ -50,7 +50,7 @@ class HolderViewModel @Inject constructor(private val getAllNewsUseCase: GetAllN
         result.onEach {
             when (it) {
                 is Resource.Error -> _isLoading.value = false
-                is Resource.Loading -> _isLoading.value = true
+                is Resource.Loading -> {}
                 is Resource.Success -> {
                     newList = it.data!!
                     _isLoading.value = false
