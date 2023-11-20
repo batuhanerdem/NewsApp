@@ -6,7 +6,7 @@ import androidx.lifecycle.Lifecycle
 import androidx.viewpager2.adapter.FragmentStateAdapter
 import com.example.newsapp.domain.model.enums.Tags
 import com.example.newsapp.ui.main_activity.news_fragment.NewsFragment
-import com.example.newsapp.utils.Country
+import com.example.newsapp.utils.CurrentCountry
 
 class FragmentAdapter(
     fragmentManager: FragmentManager,
@@ -17,7 +17,7 @@ class FragmentAdapter(
 
 
     override fun createFragment(position: Int): Fragment {
-        return NewsFragment(tags[position], Country.selectedCountry)
+        return NewsFragment(tags[position], CurrentCountry.value)
     }
 
     override fun getItemCount(): Int {

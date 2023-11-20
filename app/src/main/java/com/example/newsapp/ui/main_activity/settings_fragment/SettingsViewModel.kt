@@ -4,7 +4,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.example.newsapp.utils.SelectableData
 import com.example.newsapp.domain.model.enums.Countries
-import com.example.newsapp.utils.Country
+import com.example.newsapp.utils.CurrentCountry
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 
@@ -22,7 +22,7 @@ class SettingsViewModel @Inject constructor() : ViewModel() {
     }
 
     private fun Countries.toSelectableData(): SelectableData<Countries> {
-        val isSelected = Country.selectedCountry == this
+        val isSelected = CurrentCountry.value == this
         return SelectableData(this, isSelected)
     }
 }

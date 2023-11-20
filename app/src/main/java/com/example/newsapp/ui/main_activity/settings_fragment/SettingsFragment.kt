@@ -11,7 +11,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.newsapp.databinding.FragmentSettingsBinding
 import com.example.newsapp.domain.model.enums.Countries
 import com.example.newsapp.ui.main_activity.MainActivity
-import com.example.newsapp.utils.Country
+import com.example.newsapp.utils.CurrentCountry
 import com.example.newsapp.utils.SelectableData
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -51,7 +51,7 @@ class SettingsFragment : Fragment() {
     private fun countryOnClick(
         selectedCountry: SelectableData<Countries>,
     ) {
-        Country.selectedCountry = selectedCountry.data
+        CurrentCountry.value = selectedCountry.data
         val list = viewModel.selectableCountryList.value
         list?.let {
             // find new selected country's index

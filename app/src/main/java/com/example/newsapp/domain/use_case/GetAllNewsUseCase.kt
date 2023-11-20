@@ -3,7 +3,7 @@ package com.example.newsapp.domain.use_case
 import com.example.newsapp.domain.model.New
 import com.example.newsapp.domain.model.enums.Tags
 import com.example.newsapp.domain.repository.NewRepository
-import com.example.newsapp.utils.Country
+import com.example.newsapp.utils.CurrentCountry
 import com.example.newsapp.utils.Resource
 import dagger.hilt.android.scopes.ViewModelScoped
 import kotlinx.coroutines.flow.Flow
@@ -16,7 +16,7 @@ class GetAllNewsUseCase @Inject constructor(private val newRepository: NewReposi
         emit(Resource.Loading())
         val newList = mutableListOf<New>()
         enumValues<Tags>().map {
-            val result = newRepository.getNews(Country.selectedCountry.value, it.value)
+            val result = newRepository.getNews(CurrentCountry.value.value, it.value)
             if (result.data?.success != true) {
                 emit(Resource.Error(result.message))
             } else {
