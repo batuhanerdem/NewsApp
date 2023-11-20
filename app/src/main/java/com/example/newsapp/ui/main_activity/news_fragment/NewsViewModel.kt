@@ -38,9 +38,11 @@ class NewsViewModel @Inject constructor(private val useCase: GetNewsUseCase) : V
                     }
 
                     is Resource.Success -> {
-                        if (it.data != null && it.data.result.isNotEmpty())
-                            _news.value = it.data.result
-                        else _error.value = it.message ?: "Server problem, list is empty"
+                        it.data?.let { list ->
+                            _news.value = list
+                            if (list.isEmpty())
+                                _error.value = it.message ?: "Server problem, list is empty"
+                        }
                         _isLoading.value = false
                     }
 
