@@ -3,10 +3,15 @@
     <style name="Base.Theme.CurrencyApp" parent="Theme.Material3.DayNight.NoActionBar">
         <item name="android:windowDrawsSystemBarBackgrounds">true</item>
         <item name="android:statusBarColor">@android:color/transparent</item>
-<!--        <item name="android:windowTranslucentStatus">true</item>-->
+        <!--        <item name="android:windowTranslucentStatus">true</item>-->
         <item name="android:windowLightStatusBar">true</item>
     </style>
 
     <style name="Theme.CurrencyApp" parent="Base.Theme.CurrencyApp" />
+
+    <style name="App.Custom.Indicator" parent="Widget.Material3.BottomNavigationView.ActiveIndicator">
+        <item name="android:width">0dp</item>
+        <item name="android:height">0dp</item>
+    </style>
 
 </resources>
