@@ -1,0 +1,11 @@
+<!-- res/color/bottom_nav_colors.xml -->
+
+<selector xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <!-- Seçilen durum için renk -->
+    <item android:color="@color/selected_color" android:state_checked="true" />
+
+    <!-- Normal durum için renk -->
+    <item android:color="@color/normal_color" />
+
+</selector>
