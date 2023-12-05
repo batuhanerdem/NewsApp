@@ -9,7 +9,7 @@ plugins {
 
 android {
     namespace = "com.example.newsapp"
-    compileSdk = 33
+    compileSdk = 34
 
 
     defaultConfig {
@@ -77,6 +77,10 @@ dependencies {
 
     // Glide
     implementation("com.github.bumptech.glide:glide:4.16.0")
+
+    //constraint layout
+    implementation("androidx.constraintlayout:constraintlayout:2.2.0-alpha13")
+
 
     implementation("androidx.core:core-ktx:1.9.0")
     implementation("androidx.appcompat:appcompat:1.6.1")
