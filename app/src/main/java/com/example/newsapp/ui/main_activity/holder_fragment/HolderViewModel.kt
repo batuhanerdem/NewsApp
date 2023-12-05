@@ -21,7 +21,7 @@ class HolderViewModel @Inject constructor(private val getAllNewsUseCase: GetAllN
     val isLoading: LiveData<Boolean> get() = _isLoading
 
     val searchingList = MutableLiveData<List<New>>()
-    private lateinit var newList: List<New>
+    private var newList: List<New>? = null
 
     init {
         viewModelScope.launch {
@@ -33,14 +33,17 @@ class HolderViewModel @Inject constructor(private val getAllNewsUseCase: GetAllN
         _isLoading.value = true
         viewModelScope.launch {
             if (query == null) return@launch
-            val filteredList = mutableListOf<New>()
-            for (new in newList) {
-                if (new.name.lowercase(Locale.ROOT).contains(query)) {
-                    filteredList.add(new)
+            newList?.let {
+                val filteredList = mutableListOf<New>()
+                for (new in it) {
+                    if (new.name.lowercase(Locale.ROOT).contains(query.lowercase(Locale.ROOT))) {
+                        filteredList.add(new)
+                    }
                 }
+                searchingList.value = filteredList
+                _isLoading.value = false
             }
-            searchingList.value = filteredList
-            _isLoading.value = false
+
         }
     }
 
@@ -50,7 +53,9 @@ class HolderViewModel @Inject constructor(private val getAllNewsUseCase: GetAllN
         result.onEach {
             when (it) {
                 is Resource.Error -> _isLoading.value = false
-                is Resource.Loading -> {}
+                is Resource.Loading -> {
+                    //nothing happens here, I don't want to trigger any loading component
+                }
                 is Resource.Success -> {
                     newList = it.data!!
                     _isLoading.value = false
