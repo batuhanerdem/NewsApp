@@ -40,14 +40,12 @@ class HolderFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        setLayout()
+        setViewPagerAndTableLayout()
         setOnListChangeListener()
         setSearchListener()
         setLoadingListener()
     }
-
-    private fun setLayout() {
-        //view pager and table layout
+    private fun setViewPagerAndTableLayout() {
         val viewPager = binding.viewPager
         val tabLayout = binding.tabLayout
         val tags = enumValues<Tags>().toList()
@@ -57,7 +55,6 @@ class HolderFragment : Fragment() {
             tab.text = tags[position].title
         }.attach()
 
-        //recycler view for searching results
         adapter = NewAdapter { new -> goToNewFragmentWithNew(new) }
         binding.rvSearch.adapter = adapter
         binding.rvSearch.layoutManager = LinearLayoutManager(context)
