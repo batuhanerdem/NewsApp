@@ -7,26 +7,24 @@
 
 
     <ImageButton
+        android:contentDescription="@string/country_flag"
         android:id="@+id/btnCountry"
         android:layout_width="149dp"
         android:layout_height="100dp"
         android:layout_marginVertical="30dp"
-        android:background="@drawable/unselected_button"
-        android:foreground="@drawable/unselected_button"
+        android:background="@drawable/background_unselected_button"
         android:maxWidth="149dp"
         android:scaleType="fitXY"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.48"
-        tools:src="@drawable/turkey" />
+        tools:src="@drawable/country_turkey" />
 
     <TextView
         android:id="@+id/tvSelected"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:fontFamily="@font/oregano"
         android:text="Selected"
         android:textAlignment="center"
         android:textColor="@color/black"

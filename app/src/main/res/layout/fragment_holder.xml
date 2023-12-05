@@ -12,7 +12,7 @@
         android:layout_marginStart="17dp"
         android:layout_marginTop="20dp"
         android:contentDescription="@string/new_image"
-        android:src="@drawable/logo2"
+        android:src="@drawable/app_logo"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -66,7 +66,7 @@
         android:layout_height="50dp"
         android:layout_marginTop="180dp"
         android:autofillHints="Search"
-        android:foreground="@drawable/search_view_bg"
+        android:foreground="@drawable/background_search_view"
         app:layout_constraintEnd_toEndOf="@id/tabLayout"
         app:layout_constraintStart_toStartOf="@id/tabLayout"
         app:layout_constraintTop_toTopOf="parent"

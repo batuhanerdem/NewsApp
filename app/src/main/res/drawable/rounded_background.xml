@@ -1,5 +1,0 @@
-<!-- res/drawable/rounded_background.xml -->
-<shape xmlns:android="http://schemas.android.com/apk/res/android">
-    <solid android:color="@color/white" /> <!-- Arka plan rengi, isteğe bağlı olarak ayarlayabilirsiniz -->
-    <corners android:radius="20dp" /> <!-- Kenar yuvarlama miktarı -->
-</shape>

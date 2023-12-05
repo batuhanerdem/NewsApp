@@ -67,7 +67,7 @@
             app:layout_constraintStart_toStartOf="@id/ivNew"
             tools:text="Wednesday"
             android:layout_marginStart="10dp"
-            app:drawableStartCompat="@drawable/baseline_calendar_today_24" />
+            app:drawableStartCompat="@drawable/icon_calendar" />
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>

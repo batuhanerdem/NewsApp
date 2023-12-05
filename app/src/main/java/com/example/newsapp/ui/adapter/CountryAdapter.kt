@@ -29,9 +29,9 @@ class CountryAdapter(
 
         val resources = holder.binding.btnCountry.resources
         val selectedDrawable = ResourcesCompat
-            .getDrawable(resources, R.drawable.selected_button, null)
+            .getDrawable(resources, R.drawable.background_selected_button, null)
         val unselectedDrawable = ResourcesCompat
-            .getDrawable(resources, R.drawable.unselected_button, null)
+            .getDrawable(resources, R.drawable.background_unselected_button, null)
 
         holder.binding.apply {
             btnCountry.setImageResource(currentSelectableCountry.data.flagImageId)

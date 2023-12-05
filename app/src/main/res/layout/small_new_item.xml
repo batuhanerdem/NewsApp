@@ -24,7 +24,7 @@
             android:layout_width="90dp"
             android:layout_height="85dp"
             android:scaleType="fitXY"
-            android:src="@drawable/turkey" />
+            android:src="@drawable/country_turkey" />
     </androidx.cardview.widget.CardView>
 
 
@@ -54,7 +54,7 @@
         android:paddingStart="5dp"
         android:paddingEnd="5dp"
         android:textColor="#8C000000"
-        app:drawableStartCompat="@drawable/baseline_access_time_24"
+        app:drawableStartCompat="@drawable/icon_clock"
         app:layout_constraintStart_toStartOf="@id/tvTitle"
         app:layout_constraintTop_toBottomOf="@id/tvTitle"
         tools:text="Today" />
@@ -69,7 +69,7 @@
         android:paddingStart="5dp"
         android:text="123 views"
         android:textColor="#8C000000"
-        app:drawableStartCompat="@drawable/baseline_remove_red_eye_24"
+        app:drawableStartCompat="@drawable/icon_eye"
         app:layout_constraintEnd_toEndOf="@id/tvTitle"
         app:layout_constraintTop_toBottomOf="@id/tvTitle"
         tools:text="123 views" />
