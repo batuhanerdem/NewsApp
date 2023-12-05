@@ -19,7 +19,7 @@ import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
 class NewsFragment(
-    private val tag: Tags = Tags.GENERAL, private val country: Countries = Countries.TURKEY
+    private val tag: Tags, private val country: Countries
 ) : Fragment() {
     private lateinit var binding: FragmentNewsBinding
     private lateinit var adapter: NewAdapter
