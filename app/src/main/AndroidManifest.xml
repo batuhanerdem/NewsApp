@@ -12,7 +12,7 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:name=".di.App"
-        android:theme="@style/Theme.CurrencyApp"
+        android:theme="@style/Theme.NewsApp"
         tools:targetApi="31">
         <activity
             android:name=".ui.main_activity.MainActivity"
