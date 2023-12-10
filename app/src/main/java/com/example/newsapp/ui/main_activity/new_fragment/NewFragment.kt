@@ -30,6 +30,7 @@ class NewFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         val selectedNewWithGenre = args.NewWithGenre
         setUI(selectedNewWithGenre)
+        setOnClickListeners()
     }
 
     private fun setUI(newWithGenre: NewWithGenre) {
@@ -53,6 +54,12 @@ class NewFragment : Fragment() {
 //                val intent = Intent(Intent.ACTION_VIEW, uri)
 //                startActivity(intent)
 //            }
+        }
+    }
+
+    private fun setOnClickListeners() {
+        binding.btnBack.setOnClickListener {
+            parentFragmentManager.popBackStack()
         }
     }
 }

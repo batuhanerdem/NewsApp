@@ -1,4 +1,4 @@
-package com.example.newsapp.ui.main_activity.holder_fragment
+package com.example.newsapp.ui.main_activity.search_fragment
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -11,7 +11,7 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.example.newsapp.databinding.FragmentHolderBinding
+import com.example.newsapp.databinding.FragmentSearchBinding
 import com.example.newsapp.domain.model.NewWithGenre
 import com.example.newsapp.domain.model.enums.Tags
 import com.example.newsapp.ui.adapter.FragmentAdapter
@@ -21,14 +21,14 @@ import com.google.android.material.tabs.TabLayoutMediator
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class HolderFragment : Fragment() {
-    private lateinit var binding: FragmentHolderBinding
-    private val viewModel: HolderViewModel by viewModels()
+class SearchFragment : Fragment() {
+    private lateinit var binding: FragmentSearchBinding
+    private val viewModel: SearchViewModel by viewModels()
     private lateinit var adapter: NewAdapter
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
     ): View {
-        binding = FragmentHolderBinding.inflate(inflater)
+        binding = FragmentSearchBinding.inflate(inflater)
         return binding.root
     }
 
@@ -63,7 +63,7 @@ class HolderFragment : Fragment() {
     }
 
     private fun goToNewFragmentWithNew(newWithGenre: NewWithGenre) {
-        val action = HolderFragmentDirections.actionHolderFragmentToNewFragment(newWithGenre)
+        val action = SearchFragmentDirections.actionHolderFragmentToNewFragment(newWithGenre)
         val navController = findNavController()
         navController.navigate(action)
     }

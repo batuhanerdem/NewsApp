@@ -1,4 +1,4 @@
-package com.example.newsapp.ui.main_activity.holder_fragment
+package com.example.newsapp.ui.main_activity.search_fragment
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
@@ -15,7 +15,7 @@ import java.util.Locale
 import javax.inject.Inject
 
 @HiltViewModel
-class HolderViewModel @Inject constructor(private val getAllNewsUseCase: GetAllNewsUseCase) :
+class SearchViewModel @Inject constructor(private val getAllNewsUseCase: GetAllNewsUseCase) :
     ViewModel() {
     private var _isLoading = MutableLiveData<Boolean>()
     val isLoading: LiveData<Boolean> get() = _isLoading

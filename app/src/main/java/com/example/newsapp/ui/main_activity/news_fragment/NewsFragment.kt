@@ -14,7 +14,7 @@ import com.example.newsapp.domain.model.NewWithGenre
 import com.example.newsapp.domain.model.enums.Countries
 import com.example.newsapp.domain.model.enums.Tags
 import com.example.newsapp.ui.adapter.NewAdapter
-import com.example.newsapp.ui.main_activity.holder_fragment.HolderFragmentDirections
+import com.example.newsapp.ui.main_activity.search_fragment.SearchFragmentDirections
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -64,7 +64,7 @@ class NewsFragment(
     }
 
     private fun goToNewFragmentWithNew(newWithGenre: NewWithGenre) {
-        val action = HolderFragmentDirections.actionHolderFragmentToNewFragment(newWithGenre)
+        val action = SearchFragmentDirections.actionHolderFragmentToNewFragment(newWithGenre)
         val navController = requireParentFragment().findNavController()
         navController.navigate(action)
     }

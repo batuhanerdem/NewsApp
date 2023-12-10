@@ -26,6 +26,14 @@
                 app:layout_collapseParallaxMultiplier="0.7"
                 tools:src="@drawable/country_turkey" />
 
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/btnBack"
+                android:layout_marginTop="30dp"
+                android:layout_width="48dp"
+                android:layout_height="48dp"
+                android:background="@drawable/icon_back"
+                android:layout_gravity="top" />
+
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
