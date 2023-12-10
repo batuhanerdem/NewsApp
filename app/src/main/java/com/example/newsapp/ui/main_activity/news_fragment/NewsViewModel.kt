@@ -4,7 +4,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.newsapp.domain.model.New
+import com.example.newsapp.domain.model.NewWithGenre
 import com.example.newsapp.domain.model.enums.Countries
 import com.example.newsapp.domain.model.enums.Tags
 import com.example.newsapp.domain.use_case.GetNewsUseCase
@@ -24,12 +24,12 @@ class NewsViewModel @Inject constructor(private val useCase: GetNewsUseCase) : V
     private var _isLoading = MutableLiveData<Boolean>()
     val isLoading: LiveData<Boolean> get() = _isLoading
 
-    private var _news = MutableLiveData<List<New>>()
-    val news: LiveData<List<New>> get() = _news
+    private var _newsWithGenres = MutableLiveData<List<NewWithGenre>>()
+    val newsWithGenres: LiveData<List<NewWithGenre>> get() = _newsWithGenres
 
     fun getNews(country: Countries, tag: Tags) {
         viewModelScope.launch {
-            val result = useCase.execute(country.value, tag.value)
+            val result = useCase.execute(country, tag)
             result.onEach {
                 when (it) {
                     is Resource.Error -> {
@@ -39,7 +39,7 @@ class NewsViewModel @Inject constructor(private val useCase: GetNewsUseCase) : V
 
                     is Resource.Success -> {
                         it.data?.let { list ->
-                            _news.value = list
+                            _newsWithGenres.value = list
                             if (list.isEmpty())
                                 _error.value = it.message ?: "Server problem, list is empty"
                         }

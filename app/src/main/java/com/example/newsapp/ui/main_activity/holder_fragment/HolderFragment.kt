@@ -12,7 +12,7 @@ import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.newsapp.databinding.FragmentHolderBinding
-import com.example.newsapp.domain.model.New
+import com.example.newsapp.domain.model.NewWithGenre
 import com.example.newsapp.domain.model.enums.Tags
 import com.example.newsapp.ui.adapter.FragmentAdapter
 import com.example.newsapp.ui.adapter.NewAdapter
@@ -45,6 +45,7 @@ class HolderFragment : Fragment() {
         setSearchListener()
         setLoadingListener()
     }
+
     private fun setViewPagerAndTableLayout() {
         val viewPager = binding.viewPager
         val tabLayout = binding.tabLayout
@@ -55,14 +56,14 @@ class HolderFragment : Fragment() {
             tab.text = tags[position].title
         }.attach()
 
-        adapter = NewAdapter { new -> goToNewFragmentWithNew(new) }
+        adapter = NewAdapter { newWithGenre -> goToNewFragmentWithNew(newWithGenre) }
         binding.rvSearch.adapter = adapter
         binding.rvSearch.layoutManager = LinearLayoutManager(context)
 
     }
 
-    private fun goToNewFragmentWithNew(new: New) {
-        val action = HolderFragmentDirections.actionHolderFragmentToNewFragment(new)
+    private fun goToNewFragmentWithNew(newWithGenre: NewWithGenre) {
+        val action = HolderFragmentDirections.actionHolderFragmentToNewFragment(newWithGenre)
         val navController = findNavController()
         navController.navigate(action)
     }
@@ -73,10 +74,10 @@ class HolderFragment : Fragment() {
                 return false
             }
 
-            override fun onQueryTextChange(newText: String?): Boolean {
-                if (newText.isNullOrEmpty()) makeRvInvisible()
+            override fun onQueryTextChange(newWithGenreText: String?): Boolean {
+                if (newWithGenreText.isNullOrEmpty()) makeRvInvisible()
                 else makeRvVisible()
-                viewModel.filterList(newText)
+                viewModel.filterList(newWithGenreText)
                 return true
             }
 

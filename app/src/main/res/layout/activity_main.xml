@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#E6FFFFF0"
+    android:background="@color/white"
     tools:context=".ui.main_activity.MainActivity">
 
     <androidx.fragment.app.FragmentContainerView
@@ -23,6 +23,7 @@
         android:id="@+id/navigationView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        app:itemIconSize="32dp"
         android:background="@drawable/background_navbar"
         app:itemActiveIndicatorStyle="@style/App.Custom.Indicator"
         app:itemIconTint="@drawable/color_navbar_colors"

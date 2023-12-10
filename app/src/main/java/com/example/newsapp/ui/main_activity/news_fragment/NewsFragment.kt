@@ -10,7 +10,7 @@ import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.newsapp.databinding.FragmentNewsBinding
-import com.example.newsapp.domain.model.New
+import com.example.newsapp.domain.model.NewWithGenre
 import com.example.newsapp.domain.model.enums.Countries
 import com.example.newsapp.domain.model.enums.Tags
 import com.example.newsapp.ui.adapter.NewAdapter
@@ -39,14 +39,14 @@ class NewsFragment(
     }
 
     private fun setRV() {
-        adapter = NewAdapter { new -> goToNewFragmentWithNew(new) }
+        adapter = NewAdapter { newWithGenre -> goToNewFragmentWithNew(newWithGenre) }
         val recyclerView = binding.recyclerViewNew
         recyclerView.adapter = adapter
         recyclerView.layoutManager = LinearLayoutManager(context)
     }
 
     private fun setObServers() {
-        fragmentViewModel.news.observe(viewLifecycleOwner) {
+        fragmentViewModel.newsWithGenres.observe(viewLifecycleOwner) {
             adapter.submitList(it)
         }
 
@@ -63,8 +63,8 @@ class NewsFragment(
         }
     }
 
-    private fun goToNewFragmentWithNew(new: New) {
-        val action = HolderFragmentDirections.actionHolderFragmentToNewFragment(new)
+    private fun goToNewFragmentWithNew(newWithGenre: NewWithGenre) {
+        val action = HolderFragmentDirections.actionHolderFragmentToNewFragment(newWithGenre)
         val navController = requireParentFragment().findNavController()
         navController.navigate(action)
     }

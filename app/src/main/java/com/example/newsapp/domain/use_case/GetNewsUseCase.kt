@@ -1,6 +1,8 @@
 package com.example.newsapp.domain.use_case
 
-import com.example.newsapp.domain.model.New
+import com.example.newsapp.domain.model.NewWithGenre
+import com.example.newsapp.domain.model.enums.Countries
+import com.example.newsapp.domain.model.enums.Tags
 import com.example.newsapp.domain.repository.NewRepository
 import com.example.newsapp.utils.Resource
 import dagger.hilt.android.scopes.ViewModelScoped
@@ -11,13 +13,16 @@ import javax.inject.Inject
 @ViewModelScoped
 class GetNewsUseCase @Inject constructor(private val newRepository: NewRepository) {
 
-    suspend fun execute(country: String, tag: String): Flow<Resource<List<New>>> = flow {
+    suspend fun execute(country: Countries, tag: Tags): Flow<Resource<List<NewWithGenre>>> = flow {
         emit(Resource.Loading())
-        val result = newRepository.getNews(country, tag)
+        val result = newRepository.getNews(country.value, tag.value)
         if (result.data?.success != true) {
             emit(Resource.Error(result.message))
         } else {
-            emit(Resource.Success(result.data.result))
+            val newsWithGenres = result.data.result.map {
+                newRepository.newToNewWithGenre(it, tag.title)
+            }
+            emit(Resource.Success(newsWithGenres))
         }
     }
 }

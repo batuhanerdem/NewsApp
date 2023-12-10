@@ -48,6 +48,7 @@ android {
 }
 
 dependencies {
+    implementation("androidx.core:core-ktx:1.12.0")
     val nav_version = "2.6.0"
     val lifecycle_version = "2.6.2"
 
@@ -77,6 +78,9 @@ dependencies {
 
     // Glide
     implementation("com.github.bumptech.glide:glide:4.16.0")
+
+    //coordinator layout
+    implementation("androidx.coordinatorlayout:coordinatorlayout:1.2.0")
 
     //constraint layout
     implementation("androidx.constraintlayout:constraintlayout:2.2.0-alpha13")

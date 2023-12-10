@@ -37,8 +37,8 @@
             android:id="@+id/action_newFragment_to_holderFragment"
             app:destination="@id/holderFragment" />
         <argument
-            android:name="New"
-            app:argType="com.example.newsapp.domain.model.New" />
+            android:name="NewWithGenre"
+            app:argType="com.example.newsapp.domain.model.NewWithGenre" />
     </fragment>
     <fragment
         android:id="@+id/newsFragment"
