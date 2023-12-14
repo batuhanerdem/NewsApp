@@ -38,6 +38,21 @@ object DateUtils {
         }
     }
 
+    fun isFirstOlder(date1: String, date2: String): Boolean? {
+        val format = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'", Locale.getDefault())
+
+        return try {
+            val parsedDate1: Date = format.parse(date1) ?: Date()
+            val parsedDate2: Date = format.parse(date2) ?: Date()
+
+            parsedDate1.after(parsedDate2)
+        } catch (e: Exception) {
+            e.printStackTrace()
+            null
+        }
+    }
+
+
     private fun calculateDayDifference(currentDate: Date, otherDate: Date): Long {
         val diffInMillies = abs(currentDate.time - otherDate.time)
         val (millisecInSec, secInMin, minInHour, hourInDay) = listOf(1000, 60, 60, 24)

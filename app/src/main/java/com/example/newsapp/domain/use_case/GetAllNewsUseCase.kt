@@ -10,7 +10,7 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 import javax.inject.Inject
 
-@ViewModelScoped
+
 class GetAllNewsUseCase @Inject constructor(private val newRepository: NewRepository) {
     suspend fun execute(): Flow<Resource<List<NewWithGenre>>> = flow {
         emit(Resource.Loading())

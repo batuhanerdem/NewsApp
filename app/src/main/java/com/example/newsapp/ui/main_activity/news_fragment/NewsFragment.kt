@@ -64,7 +64,7 @@ class NewsFragment(
     }
 
     private fun goToNewFragmentWithNew(newWithGenre: NewWithGenre) {
-        val action = SearchFragmentDirections.actionHolderFragmentToNewFragment(newWithGenre)
+        val action = SearchFragmentDirections.actionSearchFragmentToNewFragment(newWithGenre)
         val navController = requireParentFragment().findNavController()
         navController.navigate(action)
     }

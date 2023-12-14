@@ -63,7 +63,7 @@ class SearchFragment : Fragment() {
     }
 
     private fun goToNewFragmentWithNew(newWithGenre: NewWithGenre) {
-        val action = SearchFragmentDirections.actionHolderFragmentToNewFragment(newWithGenre)
+        val action = SearchFragmentDirections.actionSearchFragmentToNewFragment(newWithGenre)
         val navController = findNavController()
         navController.navigate(action)
     }
