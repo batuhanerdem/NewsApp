@@ -6,7 +6,7 @@ The name is pretty self-explanatory.
 
 -   Retrofit for fetching data
 -   Hilt for dependency injection
--   MVVM structure, Clean architecture, Testable code via Use Case's, Repositories, ViewModels
+-   MVVM structure, Clean architecture, Testable code via Use Case's, Repositories, ActionBus for each fragment/activity
 -   Table layout, Constraint layout, Cardview as layouts
 -   ViewPager for showing some fragments, Recycler View for listing
 -   Navigation
