@@ -34,7 +34,7 @@ abstract class BaseFragment<ActionBus : BaseActionBus, ViewModel : BaseViewModel
         ProgressBar(requireActivity())
     }
 
-    protected val viewModel: ViewModel by lazy {
+    protected open val viewModel: ViewModel by lazy {
         ViewModelProvider(this)[viewModelClass]
     }
 

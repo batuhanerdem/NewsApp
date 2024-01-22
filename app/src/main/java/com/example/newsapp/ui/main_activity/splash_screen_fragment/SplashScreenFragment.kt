@@ -1,5 +1,6 @@
 package com.example.newsapp.ui.main_activity.splash_screen_fragment
 
+import android.annotation.SuppressLint
 import com.example.newsapp.R
 import com.example.newsapp.databinding.FragmentSplashScreenBinding
 import com.example.newsapp.ui.base.BaseFragment
@@ -7,6 +8,7 @@ import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.coroutineScope
 import kotlinx.coroutines.delay
 
+@SuppressLint("CustomSplashScreen")
 @AndroidEntryPoint
 class SplashScreenFragment :
     BaseFragment<SplashScreenActionBus, SplashScreenViewModel, FragmentSplashScreenBinding>(
@@ -17,11 +19,13 @@ class SplashScreenFragment :
             SplashScreenActionBus.DataLoaded -> {
                 coroutineScope {
                     delay(1700)
-                    val action = SplashScreenFragmentDirections.actionSplashScreenFragmentToHomeFragment()
+                    val navigationAction =
+                        SplashScreenFragmentDirections.actionSplashScreenFragmentToHomeFragment()
                     val thisFragmentId = R.id.splashScreenFragment
-                    navigateTo(action, thisFragmentId,true)
+                    navigateTo(navigationAction, thisFragmentId, true)
                 }
             }
+
             is SplashScreenActionBus.ShowErrorMessage -> showErrorMessage(action.errorMessage)
             SplashScreenActionBus.Init -> {}
         }

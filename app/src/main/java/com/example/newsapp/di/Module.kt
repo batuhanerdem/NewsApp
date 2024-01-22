@@ -57,12 +57,6 @@ class Module {
 
     @Singleton
     @Provides
-    fun provideWorkManager(context: Context): WorkManager {
-        return WorkManager.getInstance(context)
-    }
-
-    @Singleton
-    @Provides
     fun provideContext(@ApplicationContext context: Context): Context {
         return context
     }

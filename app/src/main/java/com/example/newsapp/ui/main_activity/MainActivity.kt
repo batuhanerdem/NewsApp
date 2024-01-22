@@ -27,37 +27,12 @@ import javax.inject.Inject
 class MainActivity() : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
 
-    @Inject
-    lateinit var workManager: WorkManager
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
         setNotificationBarTransparent()
         setNavListeners()
-    }
-
-    override fun onPause() {
-        val country = CountryUtils.selectedCountry
-        val request = OneTimeWorkRequestBuilder<SaveCountryWorker>().setInputData(
-            workDataOf(
-                SaveCountryWorker.SELECTED_COUNTRY_ID to country.id
-            )
-        ).build()
-//        workManager.enqueue(request)
-        super.onPause()
-    }
-
-    override fun onDestroy() {
-        val country = CountryUtils.selectedCountry
-        val request = OneTimeWorkRequestBuilder<SaveCountryWorker>().setInputData(
-            workDataOf(
-                SaveCountryWorker.SELECTED_COUNTRY_ID to country.id
-            )
-        ).build()
-//        workManager.enqueue(request)
-        super.onDestroy()
     }
 
     private fun setNavListeners() {

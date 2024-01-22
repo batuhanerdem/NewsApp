@@ -2,6 +2,7 @@ package com.example.newsapp.ui.main_activity.home_fragment
 
 import android.graphics.drawable.Drawable
 import androidx.core.net.toUri
+import androidx.fragment.app.viewModels
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.DataSource
 import com.bumptech.glide.load.MultiTransformation
@@ -25,6 +26,7 @@ class HomeFragment : BaseFragment<HomeActionBus, HomeViewModel, FragmentHomeBind
     FragmentHomeBinding::inflate, HomeViewModel::class.java
 ) {
     private lateinit var adapter: NewAdapter
+    override val viewModel by viewModels<HomeViewModel>()
 
     override fun initPage() {
     }
