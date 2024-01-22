@@ -1,28 +1,34 @@
 package com.example.newsapp.ui.main_activity.settings_fragment
 
-import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
-import com.example.newsapp.utils.SelectableData
 import com.example.newsapp.domain.model.enums.Countries
-import com.example.newsapp.utils.CurrentCountry
+import com.example.newsapp.ui.base.BaseViewModel
+import com.example.newsapp.utils.CountryUtils
+import com.example.newsapp.utils.CountryUtils.toSelectableData
+import com.example.newsapp.utils.SelectableData
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 
 @HiltViewModel
-class SettingsViewModel @Inject constructor() : ViewModel() {
-    val selectableCountryList = MutableLiveData(getSelectableCountries())
+class SettingsViewModel @Inject constructor() : BaseViewModel<SettingsActionBus>() {
 
-    private fun getSelectableCountries(): MutableList<SelectableData<Countries>> {
+    private var currentCountry: Countries? = null
+        set(value) {
+            if (field == value) return
+            field = value
+            getSelectableCountries()
+        }
+
+    fun getSelectableCountries() {
         val countriesList = enumValues<Countries>().toList()
         val selectableCountries = mutableListOf<SelectableData<Countries>>()
         for (country in countriesList) {
             selectableCountries.add(country.toSelectableData())
         }
-        return selectableCountries
+        sendAction(SettingsActionBus.CountriesLoaded(selectableCountries))
     }
 
-    private fun Countries.toSelectableData(): SelectableData<Countries> {
-        val isSelected = CurrentCountry.value == this
-        return SelectableData(this, isSelected)
+    fun setCurrentCountry() {
+        currentCountry = CountryUtils.selectedCountry
     }
+
 }

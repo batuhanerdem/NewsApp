@@ -49,8 +49,14 @@ android {
 
 dependencies {
     implementation("androidx.core:core-ktx:1.12.0")
+    implementation("androidx.appcompat:appcompat:1.6.1")
+    implementation("com.google.android.material:material:1.9.0")
+    implementation("androidx.constraintlayout:constraintlayout:2.1.4")
+    testImplementation("junit:junit:4.13.2")
+    androidTestImplementation("androidx.test.ext:junit:1.1.5")
+    androidTestImplementation("androidx.test.espresso:espresso-core:3.5.1")
+
     val nav_version = "2.6.0"
-    val lifecycle_version = "2.6.2"
 
     // Navigation
     implementation("androidx.navigation:navigation-fragment-ktx:$nav_version")
@@ -64,10 +70,12 @@ dependencies {
     implementation("com.google.dagger:hilt-android:2.48.1")
     kapt("com.google.dagger:hilt-compiler:2.48.1")
 
-    // ViewModel
+    // Lifecycle
+    val lifecycle_version = "2.6.2"
+
     implementation("androidx.lifecycle:lifecycle-viewmodel-ktx:$lifecycle_version")
-    // LiveData
     implementation("androidx.lifecycle:lifecycle-livedata-ktx:$lifecycle_version")
+    implementation("androidx.lifecycle:lifecycle-extensions:2.2.0")
 
     // For instrumentation tests
     androidTestImplementation("com.google.dagger:hilt-android-testing:2.48.1")
@@ -85,14 +93,30 @@ dependencies {
     //constraint layout
     implementation("androidx.constraintlayout:constraintlayout:2.2.0-alpha13")
 
+    implementation("jp.wasabeef:glide-transformations:4.3.0")
 
-    implementation("androidx.core:core-ktx:1.9.0")
-    implementation("androidx.appcompat:appcompat:1.6.1")
-    implementation("com.google.android.material:material:1.9.0")
-    implementation("androidx.constraintlayout:constraintlayout:2.1.4")
-    testImplementation("junit:junit:4.13.2")
-    androidTestImplementation("androidx.test.ext:junit:1.1.5")
-    androidTestImplementation("androidx.test.espresso:espresso-core:3.5.1")
+    // Sneaker
+    val sneaker_version = "2.0.0"
+    implementation("com.irozon.sneaker:sneaker:$sneaker_version")
+
+    // Lottie
+    val lottie_version = "6.2.0"
+    implementation("com.airbnb.android:lottie:$lottie_version")
+
+    // Swipe Refresh Layout
+    implementation("androidx.swiperefreshlayout:swiperefreshlayout:1.1.0")
+
+    //OKhttp profiler
+    implementation("com.localebro:okhttpprofiler:1.0.8")
+    implementation("com.squareup.okhttp3:okhttp:4.9.0")
+
+    // Datastore
+    implementation("androidx.datastore:datastore-preferences:1.0.0")
+
+    // Kotlin + coroutines
+    val work_version = "2.9.0"
+    implementation("androidx.work:work-runtime-ktx:$work_version")
+
 }
 
 kapt {

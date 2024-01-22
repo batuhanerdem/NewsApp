@@ -1,111 +1,98 @@
 package com.example.newsapp.ui.main_activity.search_fragment
 
-import android.os.Bundle
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
-import androidx.appcompat.widget.SearchView
-import androidx.core.view.isGone
 import androidx.core.view.isVisible
-import androidx.fragment.app.Fragment
-import androidx.fragment.app.viewModels
-import androidx.navigation.fragment.findNavController
-import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.core.widget.doOnTextChanged
 import com.example.newsapp.databinding.FragmentSearchBinding
 import com.example.newsapp.domain.model.NewWithGenre
 import com.example.newsapp.domain.model.enums.Tags
 import com.example.newsapp.ui.adapter.FragmentAdapter
 import com.example.newsapp.ui.adapter.NewAdapter
-import com.example.newsapp.ui.main_activity.MainActivity
+import com.example.newsapp.ui.adapter.ViewHolders
+import com.example.newsapp.ui.base.BaseFragment
 import com.google.android.material.tabs.TabLayoutMediator
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class SearchFragment : Fragment() {
-    private lateinit var binding: FragmentSearchBinding
-    private val viewModel: SearchViewModel by viewModels()
+class SearchFragment : BaseFragment<SearchActionBus, SearchViewModel, FragmentSearchBinding>(
+    FragmentSearchBinding::inflate, SearchViewModel::class.java
+) {
     private lateinit var adapter: NewAdapter
-    override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
-    ): View {
-        binding = FragmentSearchBinding.inflate(inflater)
-        return binding.root
+    private lateinit var fragmentAdapter: FragmentAdapter
+    private val tags = enumValues<Tags>().toList()
+
+    override fun initPage() {
+        setFragmentAdapter()
     }
 
     override fun onResume() {
         super.onResume()
-        val hostingActivity = requireActivity() as MainActivity
-        hostingActivity.setSelectedFragment(this)
-    }
-
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-        setViewPagerAndTableLayout()
-        setOnListChangeListener()
+        viewModel.setCurrentCountry()
+        viewModel.setNews()
+        setUI()
         setSearchListener()
-        setLoadingListener()
+        setOnClickListeners()
     }
 
-    private fun setViewPagerAndTableLayout() {
+    override suspend fun onAction(action: SearchActionBus) {
+        when (action) {
+            is SearchActionBus.FilteringFinished -> {
+                adapter.submitList(action.filteredList.toList())
+                progressBar.hide()
+            }
+
+            SearchActionBus.Init -> {}
+            SearchActionBus.Loading -> progressBar.show()
+
+            is SearchActionBus.ShowErrorMessage -> showErrorMessage(action.errorMessage)
+        }
+    }
+
+    private fun setUI() {
         val viewPager = binding.viewPager
         val tabLayout = binding.tabLayout
-        val tags = enumValues<Tags>().toList()
-        val fragmentAdapter = FragmentAdapter(this.childFragmentManager, this.lifecycle, tags)
         viewPager.adapter = fragmentAdapter
+
         TabLayoutMediator(tabLayout, viewPager) { tab, position ->
             tab.text = tags[position].title
         }.attach()
 
-        adapter = NewAdapter { newWithGenre -> goToNewFragmentWithNew(newWithGenre) }
+        adapter = NewAdapter(ViewHolders.SearchNew) { newWithGenre ->
+            goToNewFragmentWithNew(newWithGenre)
+        }
         binding.rvSearch.adapter = adapter
-        binding.rvSearch.layoutManager = LinearLayoutManager(context)
+    }
+
+    private fun setSearchListener() {
+        binding.edtSearch.text.clear()
+        binding.edtSearch.doOnTextChanged { text, _, _, _ ->
+            changeRVVisibility(text.toString().isEmpty())
+            viewModel.filterList(text.toString())
+        }
 
     }
 
     private fun goToNewFragmentWithNew(newWithGenre: NewWithGenre) {
         val action = SearchFragmentDirections.actionSearchFragmentToNewFragment(newWithGenre)
-        val navController = findNavController()
-        navController.navigate(action)
+        navigateTo(action)
     }
 
-    private fun setSearchListener() {
-        binding.searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
-            override fun onQueryTextSubmit(query: String?): Boolean {
-                return false
-            }
-
-            override fun onQueryTextChange(newWithGenreText: String?): Boolean {
-                if (newWithGenreText.isNullOrEmpty()) makeRvInvisible()
-                else makeRvVisible()
-                viewModel.filterList(newWithGenreText)
-                return true
-            }
-
-        })
+    private fun changeRVVisibility(visibility: Boolean) {
+        binding.tabLayout.isVisible = visibility
+        binding.viewPager.isVisible = visibility
+        binding.rvSearch.isVisible = !visibility
     }
 
-    private fun setOnListChangeListener() {
-        viewModel.searchingList.observe(viewLifecycleOwner) {
-            adapter.submitList(it.toList())
+    private fun setFragmentAdapter() {
+        fragmentAdapter = FragmentAdapter(
+            this.childFragmentManager, this.lifecycle, tags
+        )
+    }
+
+    private fun setOnClickListeners() {
+        binding.swipeRefreshLayout.setOnRefreshListener {
+            onResume()
+            binding.swipeRefreshLayout.isRefreshing = false
         }
-    }
-
-    private fun setLoadingListener() {
-        viewModel.isLoading.observe(viewLifecycleOwner) {
-            binding.loadingBar.isVisible = it
-        }
-    }
-
-    private fun makeRvVisible() {
-        binding.tabLayout.isGone = true
-        binding.viewPager.isGone = true
-        binding.rvSearch.isVisible = true
-    }
-
-    private fun makeRvInvisible() {
-        binding.tabLayout.isVisible = true
-        binding.viewPager.isVisible = true
-        binding.rvSearch.isGone = true
     }
 
 }

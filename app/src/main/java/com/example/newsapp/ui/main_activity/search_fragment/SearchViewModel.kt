@@ -1,11 +1,11 @@
 package com.example.newsapp.ui.main_activity.search_fragment
 
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
+import android.util.Log
 import androidx.lifecycle.viewModelScope
 import com.example.newsapp.domain.model.NewWithGenre
 import com.example.newsapp.domain.use_case.GetAllNewsUseCase
+import com.example.newsapp.ui.base.BaseViewModel
+import com.example.newsapp.utils.CountryUtils
 import com.example.newsapp.utils.Resource
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.collect
@@ -16,54 +16,65 @@ import javax.inject.Inject
 
 @HiltViewModel
 class SearchViewModel @Inject constructor(private val getAllNewsUseCase: GetAllNewsUseCase) :
-    ViewModel() {
-    private var _isLoading = MutableLiveData<Boolean>()
-    val isLoading: LiveData<Boolean> get() = _isLoading
+    BaseViewModel<SearchActionBus>() {
 
-    val searchingList = MutableLiveData<List<NewWithGenre>>()
-    private var newList: List<NewWithGenre>? = null
+    private var allNews: List<NewWithGenre>? = null
+
+    var currentCountry = CountryUtils.selectedCountry
+        private set(value) {
+            if (field == value) return
+            field = value
+            allNews = null
+            setNews()
+        }
+
 
     init {
-        viewModelScope.launch {
-            getAllNews()
-        }
+        getAllNews()
     }
 
     fun filterList(query: String?) {
-        _isLoading.value = true
+//        sendAction(SearchActionBus.Loading)
         viewModelScope.launch {
             if (query == null) return@launch
-            newList?.let {
+            allNews?.let { list ->
                 val filteredList = mutableListOf<NewWithGenre>()
-                for (newWithGenre in it) {
+                for (newWithGenre in list) {
                     if (newWithGenre.new.name.lowercase(Locale.ROOT)
                             .contains(query.lowercase(Locale.ROOT))
                     ) {
                         filteredList.add(newWithGenre)
                     }
                 }
-                searchingList.value = filteredList
-                _isLoading.value = false
+                sendAction(SearchActionBus.FilteringFinished(filteredList))
             }
 
         }
     }
 
 
-    private suspend fun getAllNews() {
-        val result = getAllNewsUseCase.execute()
-        result.onEach {
-            when (it) {
-                is Resource.Error -> _isLoading.value = false
-                is Resource.Loading -> {
-                    //nothing happens here, I don't want to trigger any loading component
+    private fun getAllNews() {
+        viewModelScope.launch {
+            getAllNewsUseCase.execute(currentCountry).onEach {
+                when (it) {
+                    is Resource.Error -> {}
+                    is Resource.Loading -> {}
+                    is Resource.Success -> {
+                        allNews = it.data
+                    }
                 }
-
-                is Resource.Success -> {
-                    newList = it.data!!
-                    _isLoading.value = false
-                }
-            }
-        }.collect()
+            }.collect()
+        }
     }
+
+    fun setNews() {
+        Log.d("tag", "setNewsSearch: $allNews")
+        if (allNews == null)
+            getAllNews()
+    }
+
+    fun setCurrentCountry() {
+        currentCountry = CountryUtils.selectedCountry
+    }
+
 }

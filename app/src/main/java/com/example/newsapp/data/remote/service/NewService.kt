@@ -1,4 +1,4 @@
-package com.example.newsapp.data.api
+package com.example.newsapp.data.remote.service
 
 import com.example.newsapp.BuildConfig
 import com.example.newsapp.domain.model.APIResponse

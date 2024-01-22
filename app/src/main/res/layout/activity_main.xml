@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:fitsSystemWindows="false"
     android:background="@color/white"
     tools:context=".ui.main_activity.MainActivity">
 
@@ -11,7 +12,7 @@
         android:id="@+id/fragmentContainerView"
         android:name="androidx.navigation.fragment.NavHostFragment"
         android:layout_width="match_parent"
-        android:layout_height="0dp"
+        android:layout_height="match_parent"
         app:defaultNavHost="true"
         app:layout_constraintBottom_toTopOf="@id/navigationView"
         app:layout_constraintEnd_toEndOf="parent"
@@ -22,14 +23,15 @@
     <com.google.android.material.bottomnavigation.BottomNavigationView
         android:id="@+id/navigationView"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:itemIconSize="32dp"
+        android:layout_height="83dp"
+        app:itemIconSize="30dp"
+        app:itemPaddingTop="25dp"
+        android:paddingHorizontal="35dp"
         android:background="@drawable/background_navbar"
         app:itemActiveIndicatorStyle="@style/App.Custom.Indicator"
         app:itemIconTint="@drawable/color_navbar_colors"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/fragmentContainerView"
         app:menu="@menu/main_menu" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

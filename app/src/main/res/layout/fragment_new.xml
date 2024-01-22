@@ -28,11 +28,12 @@
 
             <androidx.appcompat.widget.AppCompatButton
                 android:id="@+id/btnBack"
-                android:layout_marginTop="30dp"
                 android:layout_width="48dp"
                 android:layout_height="48dp"
-                android:background="@drawable/icon_back"
-                android:layout_gravity="top" />
+                android:layout_gravity="top"
+                android:layout_marginTop="30dp"
+                android:background="@drawable/icon_arrow_left" />
+
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="wrap_content"

@@ -1,52 +1,48 @@
 package com.example.newsapp.domain.use_case
 
 import com.example.newsapp.domain.model.NewWithGenre
-import com.example.newsapp.utils.DateUtils
-import com.example.newsapp.utils.DateUtils.formatDateRelativeToToday
+import com.example.newsapp.domain.model.enums.Countries
+import com.example.newsapp.utils.DateUtils.isNewerThan
+import com.example.newsapp.utils.DateUtils.toDate
 import com.example.newsapp.utils.Resource
+import dagger.hilt.android.scopes.ViewModelScoped
 import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.flow
-import kotlinx.coroutines.flow.onEach
 import javax.inject.Inject
 
-//@ViewModelScoped
+@ViewModelScoped
 class GetRecentNewsUseCase @Inject constructor(
     private val getAllNewsUseCase: GetAllNewsUseCase
 ) {
     private var newList = mutableListOf<NewWithGenre>()
-    suspend fun execute(): Flow<Resource<List<NewWithGenre>>> = flow {
+    suspend fun execute(country: Countries): Flow<Resource<List<NewWithGenre>>> = flow {
+        newList.clear()
         emit(Resource.Loading())
-        val allNews = getAllNewsUseCase.execute()
-        allNews.onEach {
-            addNewsToTheListByDate(it.data)
-        }.collect()
-        for (new in newList) {
-            println(new.new.date.formatDateRelativeToToday())
+        val allNews = getAllNewsUseCase.execute(country)
+        allNews.collect {
+            addNewsToListByDate(it.data)
         }
-        // you may want to rearrange newList
         emit(Resource.Success(newList))
     }
 
-    private fun addNewsToTheListByDate(newWithGenreList: List<NewWithGenre>?) {
+    private fun addNewsToListByDate(newWithGenreList: List<NewWithGenre>?) {
         if (newWithGenreList == null) return
         if (newList.isEmpty()) {
-            val size = if (newWithGenreList.size <= 6) newWithGenreList.size else 6
+            val size = if (newWithGenreList.size <= 8) newWithGenreList.size else 8
             for (i in 0 until size) {
                 newList.add(newWithGenreList[i])
             }
         }
 
         for (new in newWithGenreList) {
-            val (oldestNewDate, oldestIndex) = getOldestNewDateInNewListWithIndex()
-            val isMyDateOlder = DateUtils.isFirstOlder(new.new.date, oldestNewDate)
-            if (isMyDateOlder == true) newList[oldestIndex] = new
+            val (newestNewDate, newestIndex) = getNewestNewDateInNewListWithIndex()
+            if (new.new.date.isNewerThan(newestNewDate) == true) newList[newestIndex] = new
         }
     }
 
-    private fun getOldestNewDateInNewListWithIndex(): Pair<String, Int> {
-        val oldestNew = newList.minBy { it.new.date }
-        val oldestIndex = newList.indexOf(oldestNew)
-        return oldestNew.new.date to oldestIndex
+    private fun getNewestNewDateInNewListWithIndex(): Pair<String, Int> {
+        val newestNew = newList.maxBy { it.new.date.toDate().time }
+        val newestIndex = newList.indexOf(newestNew)
+        return newestNew.new.date to newestIndex
     }
 }

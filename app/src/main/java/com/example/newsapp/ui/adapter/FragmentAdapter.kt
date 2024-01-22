@@ -1,12 +1,13 @@
 package com.example.newsapp.ui.adapter
 
+import android.os.Bundle
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.lifecycle.Lifecycle
 import androidx.viewpager2.adapter.FragmentStateAdapter
+import com.example.newsapp.domain.model.enums.Countries
 import com.example.newsapp.domain.model.enums.Tags
 import com.example.newsapp.ui.main_activity.news_fragment.NewsFragment
-import com.example.newsapp.utils.CurrentCountry
 
 class FragmentAdapter(
     fragmentManager: FragmentManager,
@@ -17,7 +18,11 @@ class FragmentAdapter(
 
 
     override fun createFragment(position: Int): Fragment {
-        return NewsFragment(tags[position], CurrentCountry.value)
+        val newsFragment = NewsFragment()
+        newsFragment.arguments = Bundle().apply {
+            this.putParcelable("tag", tags[position])
+        }
+        return newsFragment
     }
 
     override fun getItemCount(): Int {

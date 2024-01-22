@@ -7,8 +7,6 @@
         <item name="android:windowLightStatusBar">false</item>
     </style>
 
-    <style name="Theme.NewsApp" parent="Base.Theme.NewsApp" />
-
     <style name="App.Custom.Indicator" parent="Widget.Material3.BottomNavigationView.ActiveIndicator">
         <item name="android:width">0dp</item>
         <item name="android:height">0dp</item>

@@ -1,6 +1,6 @@
-package com.example.newsapp.data.repository
+package com.example.newsapp.data.remote.repository
 
-import com.example.newsapp.data.api.NewService
+import com.example.newsapp.data.remote.service.NewService
 import com.example.newsapp.domain.model.APIResponse
 import com.example.newsapp.domain.model.New
 import com.example.newsapp.domain.model.NewWithGenre
@@ -35,6 +35,5 @@ class NewRepositoryImpl @Inject constructor(private val service: NewService) : N
 
     override fun newToNewWithGenre(new: New, genre: String): NewWithGenre {
         return NewWithGenre(new, genre)
-
     }
 }

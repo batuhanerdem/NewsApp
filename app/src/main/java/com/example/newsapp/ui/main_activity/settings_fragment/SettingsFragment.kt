@@ -1,70 +1,74 @@
 package com.example.newsapp.ui.main_activity.settings_fragment
 
 import CountryAdapter
-import android.os.Bundle
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
-import androidx.fragment.app.Fragment
-import androidx.fragment.app.viewModels
-import androidx.recyclerview.widget.LinearLayoutManager
+import android.util.Log
+import androidx.work.ExistingWorkPolicy
+import androidx.work.OneTimeWorkRequest
+import androidx.work.OneTimeWorkRequestBuilder
+import androidx.work.WorkManager
+import androidx.work.workDataOf
+import com.example.newsapp.data.local.worker.SaveCountryWorker
 import com.example.newsapp.databinding.FragmentSettingsBinding
 import com.example.newsapp.domain.model.enums.Countries
-import com.example.newsapp.ui.main_activity.MainActivity
-import com.example.newsapp.utils.CurrentCountry
-import com.example.newsapp.utils.SelectableData
+import com.example.newsapp.ui.base.BaseFragment
+import com.example.newsapp.utils.Constants
+import com.example.newsapp.utils.CountryUtils
 import dagger.hilt.android.AndroidEntryPoint
+import javax.inject.Inject
 
 @AndroidEntryPoint
-class SettingsFragment : Fragment() {
-    private lateinit var binding: FragmentSettingsBinding
+class SettingsFragment :
+    BaseFragment<SettingsActionBus, SettingsViewModel, FragmentSettingsBinding>(
+        FragmentSettingsBinding::inflate,
+        SettingsViewModel::class.java
+    ) {
     private lateinit var adapter: CountryAdapter
-    private val viewModel: SettingsViewModel by viewModels()
 
-    override fun onResume() {
-        super.onResume()
-        val hostingActivity = requireActivity() as MainActivity
-        hostingActivity.setSelectedFragment(this)
-    }
+    @Inject
+    lateinit var workManager: WorkManager
 
-    override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
-    ): View {
-        binding = FragmentSettingsBinding.inflate(inflater)
-        return binding.root
-    }
-
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
+    override fun initPage() {
         setRV()
-        viewModel.selectableCountryList.observe(viewLifecycleOwner) {
-            adapter.submitList(it.toList())
+        viewModel.getSelectableCountries()
+    }
+
+    override suspend fun onAction(action: SettingsActionBus) {
+        when (action) {
+            SettingsActionBus.Init -> {}
+
+            is SettingsActionBus.CountriesLoaded -> {
+                adapter.submitList(action.countryList)
+            }
         }
     }
 
     private fun setRV() {
         adapter = CountryAdapter { country -> countryOnClick(country) }
         binding.recyclerCountry.adapter = adapter
-        binding.recyclerCountry.layoutManager = LinearLayoutManager(context)
     }
 
-    private fun countryOnClick(
-        selectedCountry: SelectableData<Countries>,
-    ) {
-        CurrentCountry.value = selectedCountry.data
-        val list = viewModel.selectableCountryList.value
-        list?.let {
-            // find new selected country's index
-            val nextSelectedDataIndex = it.indexOf(selectedCountry)
-            if (nextSelectedDataIndex == -1) return
+    private fun countryOnClick(country: Countries) {
+        CountryUtils.selectedCountry = country
+        viewModel.setCurrentCountry()
+        val country = CountryUtils.selectedCountry
+        val request = OneTimeWorkRequestBuilder<SaveCountryWorker>().setInputData(
+            workDataOf(
+                SaveCountryWorker.SELECTED_COUNTRY_ID to country.id
+            )
+        ).build()
+//        workManager.enqueue(request)
+    }
 
-            //find previous selected country's index
-            val previousSelectedDataIndex = it.indexOfFirst { it.isSelected }
+    override fun onDestroy() {
+        super.onDestroy()
+        val country = CountryUtils.selectedCountry
+        val request = OneTimeWorkRequestBuilder<SaveCountryWorker>().setInputData(
+            workDataOf(
+                SaveCountryWorker.SELECTED_COUNTRY_ID to country.id
+            )
+        ).build()
+        workManager.enqueue(request)
+        Log.d("tag", "onDestroy: ")
 
-            it[nextSelectedDataIndex] = it[nextSelectedDataIndex].getReversed()
-            it[previousSelectedDataIndex] = it[previousSelectedDataIndex].getReversed()
-
-            viewModel.selectableCountryList.value = it
-        }
     }
 }

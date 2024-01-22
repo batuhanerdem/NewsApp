@@ -1,56 +1,74 @@
 package com.example.newsapp.ui.main_activity.news_fragment
 
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
+import android.util.Log
 import androidx.lifecycle.viewModelScope
 import com.example.newsapp.domain.model.NewWithGenre
 import com.example.newsapp.domain.model.enums.Countries
 import com.example.newsapp.domain.model.enums.Tags
 import com.example.newsapp.domain.use_case.GetNewsUseCase
+import com.example.newsapp.ui.base.BaseViewModel
+import com.example.newsapp.utils.CountryUtils
 import com.example.newsapp.utils.Resource
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.flow.collect
-import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
-class NewsViewModel @Inject constructor(private val useCase: GetNewsUseCase) : ViewModel() {
+class NewsViewModel @Inject constructor(private val useCase: GetNewsUseCase) :
+    BaseViewModel<NewsActionBus>() {
 
-    private var _error = MutableLiveData<String?>()
-    val error: LiveData<String?> get() = _error
+    private var news: List<NewWithGenre>? = null
 
-    private var _isLoading = MutableLiveData<Boolean>()
-    val isLoading: LiveData<Boolean> get() = _isLoading
+    private var tag: Tags? = null
 
-    private var _newsWithGenres = MutableLiveData<List<NewWithGenre>>()
-    val newsWithGenres: LiveData<List<NewWithGenre>> get() = _newsWithGenres
+    private var currentCountry = CountryUtils.selectedCountry
+        private set(value) {
+            if (field == value) return
+            field = value
+            news = null
+            setNews()
+        }
 
-    fun getNews(country: Countries, tag: Tags) {
+    fun setCurrentCountry() {
+        currentCountry = CountryUtils.selectedCountry
+    }
+
+    fun setNews() {
+        Log.d("tag", "setNewsNews: $news")
+        if (news == null) {
+            tag?.let { tag ->
+                getNews(currentCountry, tag)
+            }
+        } else {
+            sendAction(NewsActionBus.NewsLoaded(news!!)) // gonna change this
+        }
+
+    }
+
+    fun setTag(tag: Tags?) {
+        this.tag = tag
+    }
+
+    private fun getNews(country: Countries, tag: Tags) {
         viewModelScope.launch {
-            val result = useCase.execute(country, tag)
-            result.onEach {
+            useCase.execute(country, tag).collect {
                 when (it) {
                     is Resource.Error -> {
-                        _error.value = it.message
-                        _isLoading.value = false
+                        sendAction(NewsActionBus.ShowErrorMessage(it.message))
                     }
 
                     is Resource.Success -> {
                         it.data?.let { list ->
-                            _newsWithGenres.value = list
-                            if (list.isEmpty())
-                                _error.value = it.message ?: "Server problem, list is empty"
+                            news = list
+                            sendAction(NewsActionBus.NewsLoaded(list))
                         }
-                        _isLoading.value = false
                     }
 
                     is Resource.Loading -> {
-                        _isLoading.value = true
+                        sendAction(NewsActionBus.Loading)
                     }
                 }
-            }.collect()
+            }
         }
     }
 }
