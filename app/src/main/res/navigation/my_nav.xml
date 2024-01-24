@@ -39,6 +39,9 @@
         <action
             android:id="@+id/action_homeFragment_to_newFragment"
             app:destination="@id/newFragment" />
+        <action
+            android:id="@+id/action_homeFragment_to_splashScreenFragment"
+            app:destination="@id/splashScreenFragment" />
     </fragment>
     <argument
         android:name="tag"
@@ -57,4 +60,9 @@
             android:id="@+id/action_splashScreenFragment_to_homeFragment"
             app:destination="@id/homeFragment" />
     </fragment>
+
+<!--    <include app:graph="@navigation/settings"/>-->
+<!--    <include app:graph="@navigation/home"/>-->
+<!--    <include app:graph="@navigation/search"/>-->
+
 </navigation>

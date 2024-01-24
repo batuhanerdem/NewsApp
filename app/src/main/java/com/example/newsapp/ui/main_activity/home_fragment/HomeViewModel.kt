@@ -36,6 +36,8 @@ class HomeViewModel @Inject constructor(private var getRecentNewsUseCase: GetRec
 
     init {
         Log.d("tag", "init: ")
+        sendAction(HomeActionBus.Init)
+
     }
     fun setCurrentCountry() {
         currentCountry = CountryUtils.selectedCountry

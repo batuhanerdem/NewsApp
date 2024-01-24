@@ -1,5 +1,6 @@
 package com.example.newsapp.ui.main_activity.splash_screen_fragment
 
+import android.util.Log
 import androidx.lifecycle.viewModelScope
 import com.example.newsapp.data.local.repository.DataStoreRepository
 import com.example.newsapp.domain.model.enums.Countries
@@ -13,6 +14,12 @@ import javax.inject.Inject
 class SplashScreenViewModel @Inject constructor(private val dataStoreRepository: DataStoreRepository) :
     BaseViewModel<SplashScreenActionBus>() {
     private val DEFAULT_COUNTRY = Countries.TURKEY
+
+    var isBacked = false
+
+    init {
+        Log.d("tag", "viewmodel init of splash: ")
+    }
 
     fun getCountryFromDataStore() {
         viewModelScope.launch {

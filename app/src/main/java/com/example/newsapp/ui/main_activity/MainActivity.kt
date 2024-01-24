@@ -10,22 +10,22 @@ import androidx.core.view.ViewCompat
 import androidx.core.view.WindowCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.core.view.isGone
+import androidx.navigation.NavController
 import androidx.navigation.fragment.NavHostFragment
+import androidx.navigation.ui.AppBarConfiguration
+import androidx.navigation.ui.navigateUp
+import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
-import androidx.work.OneTimeWorkRequestBuilder
-import androidx.work.WorkManager
-import androidx.work.workDataOf
 import com.example.newsapp.R
-import com.example.newsapp.data.local.worker.SaveCountryWorker
 import com.example.newsapp.databinding.ActivityMainBinding
-import com.example.newsapp.utils.CountryUtils
 import dagger.hilt.android.AndroidEntryPoint
-import javax.inject.Inject
 
 
 @AndroidEntryPoint
 class MainActivity() : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
+    private lateinit var config: AppBarConfiguration
+    private lateinit var navController: NavController
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -38,13 +38,19 @@ class MainActivity() : AppCompatActivity() {
     private fun setNavListeners() {
         val navHostFragment =
             supportFragmentManager.findFragmentById(R.id.fragmentContainerView) as NavHostFragment
-        val navController = navHostFragment.navController
+        navController = navHostFragment.navController
 
         navController.addOnDestinationChangedListener { _, navDestination, _ ->
             binding.navigationView.isGone =
                 (navDestination.id == R.id.newFragment) || navDestination.id == R.id.splashScreenFragment
         }
         binding.navigationView.setupWithNavController(navController)
+        config = AppBarConfiguration(
+            setOf(
+                R.id.homeFragment, R.id.searchFragment, R.id.settingsFragment
+            )
+        )
+//        setupActionBarWithNavController(navController,config)
     }
 
     private fun setNotificationBarTransparent() {
@@ -56,6 +62,10 @@ class MainActivity() : AppCompatActivity() {
         }
         binding.root.setNavBarHeight(this.window)
     }
+
+//    override fun onSupportNavigateUp(): Boolean {
+//        return navController.navigateUp(config)
+//    }
 
     private fun View.setNavBarHeight(window: Window) {
         WindowCompat.setDecorFitsSystemWindows(window, false)

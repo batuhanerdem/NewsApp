@@ -1,5 +1,6 @@
 package com.example.newsapp.ui.main_activity.settings_fragment
 
+import android.util.Log
 import androidx.lifecycle.viewModelScope
 import com.example.newsapp.data.local.repository.DataStoreRepository
 import com.example.newsapp.domain.model.enums.Countries
@@ -21,6 +22,9 @@ class SettingsViewModel @Inject constructor(private val dataStoreRepository: Dat
             field = value
             getSelectableCountries()
         }
+    init {
+        Log.d("tag", "init settings: ")
+    }
 
     fun getSelectableCountries() {
         val countriesList = enumValues<Countries>().toList()

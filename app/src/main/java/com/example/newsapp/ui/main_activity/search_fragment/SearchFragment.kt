@@ -2,6 +2,7 @@ package com.example.newsapp.ui.main_activity.search_fragment
 
 import androidx.core.view.isVisible
 import androidx.core.widget.doOnTextChanged
+import androidx.fragment.app.viewModels
 import com.example.newsapp.databinding.FragmentSearchBinding
 import com.example.newsapp.domain.model.NewWithGenre
 import com.example.newsapp.domain.model.enums.Tags
@@ -19,7 +20,6 @@ class SearchFragment : BaseFragment<SearchActionBus, SearchViewModel, FragmentSe
     private lateinit var adapter: NewAdapter
     private lateinit var fragmentAdapter: FragmentAdapter
     private val tags = enumValues<Tags>().toList()
-
     override fun initPage() {
         setFragmentAdapter()
     }

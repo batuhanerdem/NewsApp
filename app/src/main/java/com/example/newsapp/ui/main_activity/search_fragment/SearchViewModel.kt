@@ -31,6 +31,7 @@ class SearchViewModel @Inject constructor(private val getAllNewsUseCase: GetAllN
 
     init {
         getAllNews()
+        Log.d("tagz", "init search: ")
     }
 
     fun filterList(query: String?) {
