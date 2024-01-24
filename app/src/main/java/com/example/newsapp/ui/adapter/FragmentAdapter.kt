@@ -5,7 +5,6 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.lifecycle.Lifecycle
 import androidx.viewpager2.adapter.FragmentStateAdapter
-import com.example.newsapp.domain.model.enums.Countries
 import com.example.newsapp.domain.model.enums.Tags
 import com.example.newsapp.ui.main_activity.news_fragment.NewsFragment
 
@@ -18,9 +17,10 @@ class FragmentAdapter(
 
 
     override fun createFragment(position: Int): Fragment {
-        val newsFragment = NewsFragment()
-        newsFragment.arguments = Bundle().apply {
-            this.putParcelable("tag", tags[position])
+        val newsFragment = NewsFragment().also {
+            it.arguments = Bundle().apply {
+                putParcelable("tag", tags[position])
+            }
         }
         return newsFragment
     }

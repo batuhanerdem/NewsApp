@@ -21,11 +21,10 @@ import kotlinx.coroutines.flow.onEach
 import javax.inject.Inject
 
 abstract class BaseFragment<ActionBus : BaseActionBus, ViewModel : BaseViewModel<ActionBus>, Binding : ViewBinding>(
-    private val inflate: Inflate<Binding>,
-    viewModelClass: Class<ViewModel>
+    private val inflate: Inflate<Binding>, viewModelClass: Class<ViewModel>
 ) : Fragment() {
 
-    val TAG = this::class.java.simpleName // For Testing
+    val TAG = "tag" // For Testing
 
     private var _binding: Binding? = null
     val binding get() = _binding!!
@@ -34,14 +33,12 @@ abstract class BaseFragment<ActionBus : BaseActionBus, ViewModel : BaseViewModel
         ProgressBar(requireActivity())
     }
 
-    protected open val viewModel: ViewModel by lazy {
+    protected val viewModel: ViewModel by lazy {
         ViewModelProvider(this)[viewModelClass]
     }
 
     override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?
+        inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
     ): View? {
         _binding = inflate.invoke(inflater, container, false)
         return binding.root
@@ -105,9 +102,7 @@ abstract class BaseFragment<ActionBus : BaseActionBus, ViewModel : BaseViewModel
     abstract fun initPage()
 
     protected fun navigateTo(
-        action: NavDirections,
-        popUpTo: Int? = null,
-        inclusive: Boolean = false
+        action: NavDirections, popUpTo: Int? = null, inclusive: Boolean = false
     ) {
         val options = popUpTo?.let {
             navOptions {

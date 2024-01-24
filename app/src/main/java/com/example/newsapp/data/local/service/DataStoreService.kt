@@ -18,12 +18,12 @@ import javax.inject.Inject
 
 class DataStoreService @Inject constructor(@ApplicationContext val context: Context) {
 
-    companion object {
-        const val PREFERENCE_NAME = "NewsApp"
-        val Context.dataStore: DataStore<Preferences> by preferencesDataStore(
+    private companion object {
+        private const val PREFERENCE_NAME = "NewsApp"
+        private val Context.dataStore: DataStore<Preferences> by preferencesDataStore(
             name = PREFERENCE_NAME,
         )
-        val SELECTED_COUNTRY = stringPreferencesKey("selectedCountry")
+        private val SELECTED_COUNTRY = stringPreferencesKey("selectedCountry")
     }
 
     suspend fun updateSelectedCountry(countryId: Int) {
@@ -41,7 +41,7 @@ class DataStoreService @Inject constructor(@ApplicationContext val context: Cont
             Log.e("DataStore", "Unexpected error", exception)
             throw exception
         }
-    }.map { preferences ->
+    } .map { preferences ->
         val selectedCountryId = preferences[SELECTED_COUNTRY]
         findCountryById(selectedCountryId)
     }

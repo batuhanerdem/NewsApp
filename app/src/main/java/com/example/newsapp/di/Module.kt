@@ -1,7 +1,5 @@
 package com.example.newsapp.di
 
-import android.content.Context
-import androidx.work.WorkManager
 import com.example.newsapp.data.remote.repository.NewRepositoryImpl
 import com.example.newsapp.data.remote.service.NewService
 import com.example.newsapp.domain.repository.NewRepository
@@ -12,7 +10,6 @@ import com.localebro.okhttpprofiler.OkHttpProfilerInterceptor
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
-import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
 import okhttp3.OkHttpClient
 import retrofit2.Retrofit
@@ -21,9 +18,7 @@ import javax.inject.Singleton
 
 @Module
 @InstallIn(SingletonComponent::class)
-
 class Module {
-
 
     @Singleton
     @Provides
@@ -49,15 +44,10 @@ class Module {
         return retrofit.create(NewService::class.java)
     }
 
-    @Singleton
     @Provides
+    @Singleton
     fun provideNewRepository(service: NewService): NewRepository {
         return NewRepositoryImpl(service)
     }
 
-    @Singleton
-    @Provides
-    fun provideContext(@ApplicationContext context: Context): Context {
-        return context
-    }
 }

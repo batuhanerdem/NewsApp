@@ -65,7 +65,7 @@ class SearchFragment : BaseFragment<SearchActionBus, SearchViewModel, FragmentSe
     private fun setSearchListener() {
         binding.edtSearch.text.clear()
         binding.edtSearch.doOnTextChanged { text, _, _, _ ->
-            changeRVVisibility(text.toString().isEmpty())
+            changeRVAndXButtonVisibility(text.toString().isEmpty())
             viewModel.filterList(text.toString())
         }
 
@@ -76,23 +76,31 @@ class SearchFragment : BaseFragment<SearchActionBus, SearchViewModel, FragmentSe
         navigateTo(action)
     }
 
-    private fun changeRVVisibility(visibility: Boolean) {
+    private fun changeRVAndXButtonVisibility(visibility: Boolean) {
         binding.tabLayout.isVisible = visibility
         binding.viewPager.isVisible = visibility
         binding.rvSearch.isVisible = !visibility
+        binding.imgSearchClose.isVisible = !visibility
     }
 
     private fun setFragmentAdapter() {
         fragmentAdapter = FragmentAdapter(
-            this.childFragmentManager, this.lifecycle, tags
+            childFragmentManager, lifecycle, tags
         )
     }
 
     private fun setOnClickListeners() {
-        binding.swipeRefreshLayout.setOnRefreshListener {
-            onResume()
-            binding.swipeRefreshLayout.isRefreshing = false
+        binding.apply {
+
+            swipeRefreshLayout.setOnRefreshListener {
+                onResume()
+                swipeRefreshLayout.isRefreshing = false
+            }
+            imgSearchClose.setOnClickListener {
+                edtSearch.text.clear()
+            }
         }
+
     }
 
 }

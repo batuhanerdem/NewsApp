@@ -1,19 +1,16 @@
 package com.example.newsapp.ui.main_activity.settings_fragment
 
 import CountryAdapter
-import androidx.work.WorkManager
 import com.example.newsapp.databinding.FragmentSettingsBinding
 import com.example.newsapp.domain.model.enums.Countries
 import com.example.newsapp.ui.base.BaseFragment
 import com.example.newsapp.utils.CountryUtils
 import dagger.hilt.android.AndroidEntryPoint
-import javax.inject.Inject
 
 @AndroidEntryPoint
 class SettingsFragment :
     BaseFragment<SettingsActionBus, SettingsViewModel, FragmentSettingsBinding>(
-        FragmentSettingsBinding::inflate,
-        SettingsViewModel::class.java
+        FragmentSettingsBinding::inflate, SettingsViewModel::class.java
     ) {
     private lateinit var adapter: CountryAdapter
 

@@ -34,7 +34,7 @@ class NewFragment : Fragment() {
     }
 
     private fun setUI(newWithGenre: NewWithGenre) {
-        with(binding) {
+        binding.apply {
             val imageUri = newWithGenre.new.image.toUri()
             Glide.with(requireActivity()).load(imageUri).into(ivNew)
             ivNew.setColorFilter(
@@ -48,12 +48,6 @@ class NewFragment : Fragment() {
             tvGenre.text = newWithGenre.genre
             tvFirstSentence.text = newWithGenre.new.description.getFirstSentence()
             tvView.text = "123"
-
-//            tvUrl.setOnClickListener {
-//                val uri = Uri.parse(new.url)
-//                val intent = Intent(Intent.ACTION_VIEW, uri)
-//                startActivity(intent)
-//            }
         }
     }
 

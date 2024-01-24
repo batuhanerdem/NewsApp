@@ -1,4 +1,4 @@
-package com.example.newsapp.ui.main_activity.splash_screen_fragment
+package com.example.newsapp.ui.splash_activity
 
 import androidx.lifecycle.viewModelScope
 import com.example.newsapp.data.local.repository.DataStoreRepository
@@ -10,8 +10,8 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
-class SplashScreenViewModel @Inject constructor(private val dataStoreRepository: DataStoreRepository) :
-    BaseViewModel<SplashScreenActionBus>() {
+class SplashViewModel @Inject constructor(private val dataStoreRepository: DataStoreRepository) :
+    BaseViewModel<SplashActionBus>() {
     private val DEFAULT_COUNTRY = Countries.TURKEY
 
     fun getCountryFromDataStore() {
@@ -22,7 +22,7 @@ class SplashScreenViewModel @Inject constructor(private val dataStoreRepository:
                     return@collect
                 }
                 CountryUtils.selectedCountry = it
-                sendAction(SplashScreenActionBus.DataLoaded)
+                sendAction(SplashActionBus.DataLoaded)
             }
         }
     }
@@ -30,6 +30,6 @@ class SplashScreenViewModel @Inject constructor(private val dataStoreRepository:
     private suspend fun insertDefaultCountry() {
         dataStoreRepository.updateSelectedCountry(DEFAULT_COUNTRY.id)
         CountryUtils.selectedCountry = DEFAULT_COUNTRY
-        sendAction(SplashScreenActionBus.DataLoaded)
+        sendAction(SplashActionBus.DataLoaded)
     }
 }

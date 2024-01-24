@@ -9,11 +9,23 @@ import retrofit2.http.Query
 
 interface NewService {
 
-    @Headers("content-type: application/json", "authorization: ${BuildConfig.API_KEY}")
-    @GET("news/getNews")
+    @Headers(ServiceConstants.CONTENT_TYPE, ServiceConstants.AUTHORIZATION)
+    @GET(ServiceConstants.ENDPOINT_GET_NEWS)
     suspend fun getNews(
-        @Query("country") country: String,
-        @Query("tag") tag: String,
-//        @Query("paging") paging: Int = 0
+        @Query(ServiceConstants.QUERY_COUNTRY) country: String,
+        @Query(ServiceConstants.QUERY_TAG) tag: String,
     ): Response<APIResponse>
+
+    private object ServiceConstants {
+        const val CONTENT_TYPE = "content-type: application/json"
+        const val AUTHORIZATION = "authorization: ${BuildConfig.API_KEY}"
+        const val ENDPOINT_GET_NEWS = "news/getNews"
+        const val QUERY_COUNTRY = "country"
+        const val QUERY_TAG = "tag"
+    }
+
 }
+
+
+
+

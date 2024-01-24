@@ -1,5 +1,6 @@
 package com.example.newsapp.ui.main_activity.news_fragment
 
+import android.os.Build
 import android.os.Bundle
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -23,7 +24,11 @@ class NewsFragment() :
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        tag = arguments?.getParcelable("tag")
+        tag = if (Build.VERSION.SDK_INT >= 33)
+            arguments?.getParcelable("tag", Tags::class.java)
+        else {
+            arguments?.getParcelable("tag")
+        }
     }
 
     override fun initPage() {

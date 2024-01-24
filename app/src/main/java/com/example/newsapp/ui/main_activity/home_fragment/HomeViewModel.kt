@@ -34,15 +34,11 @@ class HomeViewModel @Inject constructor(private var getRecentNewsUseCase: GetRec
             setNews()
         }
 
-    init {
-        Log.d("tag", "init: ")
-    }
     fun setCurrentCountry() {
         currentCountry = CountryUtils.selectedCountry
     }
 
     fun setNews() {
-        Log.d("tag", "setNewsHome: $news")
         sendAction(HomeActionBus.Loading)
         val result = news?.also { news ->
             singleNew?.let { singleNew ->

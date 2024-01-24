@@ -26,7 +26,6 @@ class HomeFragment : BaseFragment<HomeActionBus, HomeViewModel, FragmentHomeBind
     FragmentHomeBinding::inflate, HomeViewModel::class.java
 ) {
     private lateinit var adapter: NewAdapter
-    override val viewModel by viewModels<HomeViewModel>()
 
     override fun initPage() {
     }
@@ -56,7 +55,6 @@ class HomeFragment : BaseFragment<HomeActionBus, HomeViewModel, FragmentHomeBind
 
             is HomeActionBus.SingleNewLoaded -> {
                 setSingleNew(action.new)
-//                progressBar.hide()
             }
 
         }
@@ -69,11 +67,6 @@ class HomeFragment : BaseFragment<HomeActionBus, HomeViewModel, FragmentHomeBind
         binding.rvRecentNews.adapter = adapter
     }
 
-    private fun setSingleNew(new: NewWithGenre) {
-        setSingleNewGlideAndUI(new)
-        setSingleNewOnClick(new)
-    }
-
     private fun setOnClickListeners() {
         binding.tvMore.setOnClickListener {
             val activity = requireActivity() as MainActivity
@@ -83,6 +76,11 @@ class HomeFragment : BaseFragment<HomeActionBus, HomeViewModel, FragmentHomeBind
             onResume()
             binding.swipeRefreshLayout.isRefreshing = false
         }
+    }
+
+    private fun setSingleNew(new: NewWithGenre) {
+        setSingleNewGlideAndUI(new)
+        setSingleNewOnClick(new)
     }
 
     private fun setSingleNewOnClick(new: NewWithGenre) {
@@ -110,7 +108,6 @@ class HomeFragment : BaseFragment<HomeActionBus, HomeViewModel, FragmentHomeBind
                     target: Target<Drawable>,
                     isFirstResource: Boolean
                 ): Boolean {
-                    // Resim yükleme başarısız olduğunda yapılacak işlemler
                     return false
                 }
 
