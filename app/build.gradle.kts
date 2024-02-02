@@ -93,6 +93,7 @@ dependencies {
     //constraint layout
     implementation("androidx.constraintlayout:constraintlayout:2.2.0-alpha13")
 
+    //Glide transformations
     implementation("jp.wasabeef:glide-transformations:4.3.0")
 
     // Sneaker
