@@ -1,14 +1,20 @@
 <h1 align="center" id="title">News App</h1>
 
-The name is pretty self-explanatory.
+<img src="https://github.com/batuhanerdem/NewsApp/blob/main/screenshots/logo.png" align="left"
+width="250" hspace="10" vspace="10">
 
-<h2>Technologies I used in this app:</h2>
+</br></br>The News App is an application that allows you to check the latest news from multiple countries.</br></br></br></br></br>
 
--   Retrofit for fetching data
--   Hilt for dependency injection
--   MVVM structure, Clean architecture, Testable code via Use Case's, Repositories, ActionBus for each fragment/activity
--   Table layout, Constraint layout, Cardview as layouts
--   ViewPager for showing some fragments, Recycler View for listing
--   Navigation
--   Safe args
--   View binding
+
+## 🛠 Built With
+
+- MVVM structure, Clean architecture, Testable code via Use Cases, Repositories, ActionBus
+- Coroutines & Flow
+- Hilt for Dependency Injection
+- Navigation Component
+- Glide
+- Retrofit
+- Lottie
+- ViewPager2
+- Table layout, Constraint layout, Cardview as layouts
+- View binding
