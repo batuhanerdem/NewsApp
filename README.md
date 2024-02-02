@@ -1,6 +1,6 @@
 <h1 align="center" id="title">News App</h1>
 
-<img src="https://github.com/batuhanerdem/NewsApp/blob/main/screenshots/logo.png" align="left"
+<img src="https://github.com/batuhanerdem/NewsApp/blob/main/screenshots/logo_white.png" align="left"
 width="250" hspace="10" vspace="10">
 
 </br></br>The News App is an application that allows you to check the latest news from multiple countries.</br></br></br></br></br>
